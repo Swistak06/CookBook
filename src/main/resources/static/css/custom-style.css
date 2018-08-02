@@ -1,0 +1,14 @@
+.navbar-top-custom{
+    background-color: #38bf2b;
+}
+
+.navbar-button-custom{
+    background-color: #ff0000;
+    color: white;
+    margin-right: 1rem;
+    margin-top:1.5px
+}
+
+.navbar-button-custom:hover{
+    background-color: #cc0000;
+}
