@@ -12,7 +12,6 @@ public class Recipe {
     private long id;
 
     private String name;
-    private String ingredients;
     private String formula;
 
     @Enumerated(EnumType.STRING)
@@ -23,6 +22,8 @@ public class Recipe {
 
     @Column(name = "time")
     private int preparationTime;
+
+    private int servings;
 
 
 
