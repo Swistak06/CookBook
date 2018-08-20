@@ -1,9 +1,11 @@
 package com.swistak.CookBook.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "recipies")
+@Table(name = "recipes")
 public class Recipe {
 
     @Id
@@ -12,7 +14,7 @@ public class Recipe {
     private long id;
 
     private String name;
-    private String formula;
+    private String description;
 
     @Enumerated(EnumType.STRING)
     private RecipeCategory category;
@@ -25,11 +27,15 @@ public class Recipe {
 
     private int servings;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Ingredient> ingredients = new HashSet<>();
 
-
-
-
+    @OneToMany(mappedBy = "recipe" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Step> steps = new HashSet<>();
 
 
 

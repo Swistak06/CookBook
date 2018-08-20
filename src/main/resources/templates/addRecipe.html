@@ -22,10 +22,10 @@
         <div class="collapse navbar-collapse mr-auto mt-1 mb-1" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto col-3">
                 <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">CookBook</a>
-                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/addRecipe}">Add Recipe +</a>
+                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">Add Recipe +</a>
             </div>
             <div class="navbar-nav mr-auto col-7">
-                <form class="input-group" method="POST">
+                <form class="input-group" th:action="@{/searchRecipe}" method="POST">
                     <input style="width: 50%" type="text" class="form-control" placeholder="" aria-label=""
                            aria-describedby="basic-addon1" name="searchedRecipeName">
                     <select class="custom-select" id="inputGroupSelect01" name="searchedCategory">
@@ -49,44 +49,94 @@
         </div>
     </div>
 </nav>
+
 <div class="container">
-    <div class="offset-3 col-6" style="margin-top:20px">
-        <form>
-            <div class="form-group">
-                <label for="recipeNameInput">Recipe Name</label>
-                <input type="text" class="form-control input-custom" placeholder="Name" id="recipeNameInput" />
-                <small class="form-text text-muted"> 4-100 characters</small>
+    <!--<div class="offset-3 col-6" style="margin-top:20px">-->
+    <div class="offset-1 col-10 mt-5">
+        <ul class="nav nav-tabs" id="addRecipeTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="generalInfo-tab" data-toggle="tab" href="#generalInfo" role="tab" aria-controls="generalInfo" aria-selected="true">General info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="ingredients-tab" data-toggle="tab"  href="#ingredients" role="tab" aria-controls="ingredients" aria-selected="false">Ingredients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Images</a>
+            </li>
+        </ul>
+        <form id="addRecipeForm">
+            <div class="tab-content" id="addRecipeTabContent">
+                <div class="tab-pane show active mt-2" id="generalInfo" role="tabpanel" aria-labelledby="generalInfo-tab">
+                    <div class="form-group">
+                        <label for="recipeNameInput">Recipe Name</label>
+                        <input type="text" class="form-control" placeholder="Name" id="recipeNameInput" />
+                        <small class="form-text text-muted"> 4-100 characters</small>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="categorySelection">Recipe category</label>
+                            <select class="form-control custom-input" id="categorySelection">
+                                <option th:value="Main_dish">Main Dish</option>
+                                <option th:value="Soup">Soup</option>
+                                <option th:value="Salad">Salad</option>
+                                <option th:value="Cake">Cake</option>
+                                <option th:value="Dessert">Dessert</option>
+                                <option th:value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="diffiultySelection">Recipe difficulty</label>
+                            <select class="form-control custom-input" id="diffiultySelection">
+                                <option th:value="Easy">Easy</option>
+                                <option th:value="Medium">Medium</option>
+                                <option th:value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" form-group col-4">
+                            <label for="preparationTimeInput" style="margin-top:8px; margin-right: 10px">Preparation time:</label>
+                            <input id="preparationTimeInput" class="form-control" type="number" placeholder="0"/>
+                        </div>
+                        <div class=" form-group col-4">
+                            <label for="servingsInput" style="margin-top:8px; margin-right: 10px">Servings:</label>
+                            <input id="servingsInput" class="form-control" type="number" placeholder="0"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionInput">Description</label>
+                        <textarea class="form-control" rows="5" id="descriptionInput"></textarea>
+                    </div>
+
+                </div>
+                <div class="tab-pane mt-2" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input class="form-control" placeholder="name" type="text"/>
+                            </div>
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input class="form-control" placeholder="amount"  type="text"/>
+                            </div>
+                            <button>X</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane mt-2" id="images" role="tabpanel" aria-labelledby="images-tab">
+                    <h1>gamma</h1>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="categorySelection">Recipe category</label>
-                <select class="form-control custom-input" id="categorySelection">
-                    <option th:value="Main_dish">Main Dish</option>
-                    <option th:value="Soup">Soup</option>
-                    <option th:value="Salad">Salad</option>
-                    <option th:value="Cake">Cake</option>
-                    <option th:value="Dessert">Dessert</option>
-                    <option th:value="Other">Other</option>
-                </select>
-            </div>
-            <div class=" form-group">
-                <label for="diffiultySelection">Recipe difficulty</label>
-                <select class="form-control custom-input" id="diffiultySelection">
-                    <option th:value="Easy">Easy</option>
-                    <option th:value="Medium">Medium</option>
-                    <option th:value="Hard">Hard</option>
-                </select>
-            </div>
-            <div class=" form-group">
-                <label for="preparationTimeInput" style="margin-top:8px; margin-right: 10px">Preparation time:</label>
-                <input id="preparationTimeInput" type="number" placeholder="0"/>
-            </div>
-            <div class=" form-group">
-                <label for="servingsInput" style="margin-top:8px; margin-right: 10px">Servings:</label>
-                <input id="servingsInput" type="number" placeholder="0"/>
-            </div>
-            <button type="submit" class="btn custom-red-button-logo btn-success" style="margin-bottom: 5px;">Next Step</button>
+            <button type="submit" class="btn custom-red-button-logo btn-success" style="margin-bottom: 5px;">Add recipe</button>
         </form>
     </div>
 </div>
+
+
+
+
+
+<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="/webjars/popper.js/1.14.1/popper.js"></script>
 </body>
 </html>

@@ -15,6 +15,10 @@ public class Ingredient {
 
     private String amount;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
+
     public Ingredient() {
     }
 
