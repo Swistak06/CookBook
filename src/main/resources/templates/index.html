@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse mr-auto mt-1 mb-1" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto col-3">
                 <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">CookBook</a>
-                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">Add Recipe +</a>
+                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/addRecipe}">Add Recipe +</a>
             </div>
             <div class="navbar-nav mr-auto col-7">
                 <form class="input-group" th:action="@{/searchRecipe}" method="POST">
@@ -46,7 +46,6 @@
             <div class="navbar-nav mr-auto col-2">
                 <a>Login</a>
             </div>
-
         </div>
     </div>
 </nav>

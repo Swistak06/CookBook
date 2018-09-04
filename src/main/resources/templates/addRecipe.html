@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Add Recipe</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Custom css-->
+    <link href="/css/custom-style.css" rel="stylesheet">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light navbar-top-custom">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse mr-auto mt-1 mb-1" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto col-3">
+                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">CookBook</a>
+                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">Add Recipe +</a>
+            </div>
+            <div class="navbar-nav mr-auto col-7">
+                <form class="input-group" th:action="@{/searchRecipe}" method="POST">
+                    <input style="width: 50%" type="text" class="form-control" placeholder="" aria-label=""
+                           aria-describedby="basic-addon1" name="searchedRecipeName">
+                    <select class="custom-select" id="inputGroupSelect01" name="searchedCategory">
+                        <option selected value="All">All Categories</option>
+                        <option value="Main dish">Main dish</option>
+                        <option value="Soups">Soups</option>
+                        <option value="Salads">Salads</option>
+                        <option value="Cakes">Cakes</option>
+                        <option value="Desserts">Desserts</option>
+                        <option value="Others">Others</option>
+
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary text-light" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="navbar-nav mr-auto col-2">
+                <a>Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!--<div class="offset-3 col-6" style="margin-top:20px">-->
+    <div class="offset-1 col-10 mt-5">
+        <ul class="nav nav-tabs" id="addRecipeTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="generalInfo-tab" data-toggle="tab" href="#generalInfo" role="tab" aria-controls="generalInfo" aria-selected="true">General info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="ingredients-tab" data-toggle="tab"  href="#ingredients" role="tab" aria-controls="ingredients" aria-selected="false">Ingredients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Images</a>
+            </li>
+        </ul>
+        <form id="addRecipeForm" th:action="@{/addRecipe}" th:method="post" th:object="${recipe}">
+            <div class="tab-content" id="addRecipeTabContent">
+                <div class="tab-pane show active mt-2" id="generalInfo" role="tabpanel" aria-labelledby="generalInfo-tab">
+                    <div class="form-group">
+                        <label for="recipeNameInput">Recipe Name</label>
+                        <input type="text" class="form-control" placeholder="Name" id="recipeNameInput" th:field="*{name}" required/>
+                        <small class="form-text text-muted"> 4-100 characters</small>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="categorySelection">Recipe category</label>
+                            <select class="form-control custom-input" id="categorySelection" th:field="*{category}">
+                                <option th:value="Main_dish">Main Dish</option>
+                                <option th:value="Soup">Soup</option>
+                                <option th:value="Salad">Salad</option>
+                                <option th:value="Cake">Cake</option>
+                                <option th:value="Dessert">Dessert</option>
+                                <option th:value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="diffiultySelection">Recipe difficulty</label>
+                            <select class="form-control custom-input" id="diffiultySelection" th:field="*{difficulty}">
+                                <option th:value="Easy">Easy</option>
+                                <option th:value="Medium">Medium</option>
+                                <option th:value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" form-group col-4">
+                            <label for="preparationTimeInput" style="margin-top:8px; margin-right: 10px">Preparation time:</label>
+                            <input id="preparationTimeInput" class="form-control" type="number" placeholder="0" th:field="*{preparationTime}"/>
+                        </div>
+                        <div class=" form-group col-4">
+                            <label for="servingsInput" style="margin-top:8px; margin-right: 10px">Servings:</label>
+                            <input id="servingsInput" class="form-control" type="number" placeholder="0" th:field="*{servings}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descriptionInput">Description</label>
+                        <textarea class="form-control" rows="5" id="descriptionInput" th:field="*{description}"></textarea>
+                    </div>
+
+                </div>
+                <div class="tab-pane mt-2" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="ingredientGroup">
+
+                            </div>
+                            <input id="jsonIngredients" type="hidden" th:field="*{jsonIngredientList}" name="ingredientNames" value="">
+                            <button id="addIngredient" type="button" class="offset-4 col-4 vtn btn-default mt-4">Add new ingredient</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane mt-2" id="images" role="tabpanel" aria-labelledby="images-tab">
+                    <h1>gamma</h1>
+                </div>
+            </div>
+            <button type="submit" class="btn custom-red-button-logo btn-success" style="margin-bottom: 5px;">Add recipe</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="/webjars/popper.js/1.14.1/popper.js"></script>
+<script src="js/add-recipe.js"></script>
+</body>
+</html>
