@@ -29,16 +29,24 @@ public class RecipeDto {
     @Range(min = 0,max = 1000)
     private int servings;
 
+    @NotBlank
+    private String jsonIngredientList;
+
+    @NotBlank
+    private String description;
+
     public RecipeDto() {
     }
 
-    public RecipeDto(@NotBlank String name, @NotBlank String formula, @NotNull RecipeCategory category, @NotNull RecipeDifficulty difficulty, @NotNull @Range(min = 0, max = 1500) int preparationTime, @NotNull @Range(min = 0, max = 1000) int servings) {
+    public RecipeDto(@NotBlank String name, @NotBlank String formula, @NotNull RecipeCategory category, @NotNull RecipeDifficulty difficulty, @NotNull @Range(min = 0, max = 1500) int preparationTime, @NotNull @Range(min = 0, max = 1000) int servings, @NotBlank String jsonIngredientList, @NotBlank String description) {
         this.name = name;
         this.formula = formula;
         this.category = category;
         this.difficulty = difficulty;
         this.preparationTime = preparationTime;
         this.servings = servings;
+        this.jsonIngredientList = jsonIngredientList;
+        this.description = description;
     }
 
     public String getName() {
@@ -87,5 +95,21 @@ public class RecipeDto {
 
     public void setServings(int servings) {
         this.servings = servings;
+    }
+
+    public String getJsonIngredientList() {
+        return jsonIngredientList;
+    }
+
+    public void setJsonIngredientList(String jsonIngredientList) {
+        this.jsonIngredientList = jsonIngredientList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

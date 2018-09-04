@@ -64,18 +64,18 @@
                 <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Images</a>
             </li>
         </ul>
-        <form id="addRecipeForm">
+        <form id="addRecipeForm" th:action="@{/addRecipe}" th:method="post" th:object="${recipe}">
             <div class="tab-content" id="addRecipeTabContent">
                 <div class="tab-pane show active mt-2" id="generalInfo" role="tabpanel" aria-labelledby="generalInfo-tab">
                     <div class="form-group">
                         <label for="recipeNameInput">Recipe Name</label>
-                        <input type="text" class="form-control" placeholder="Name" id="recipeNameInput" />
+                        <input type="text" class="form-control" placeholder="Name" id="recipeNameInput" th:field="*{name}" required/>
                         <small class="form-text text-muted"> 4-100 characters</small>
                     </div>
                     <div class="row">
                         <div class="form-group col-4">
                             <label for="categorySelection">Recipe category</label>
-                            <select class="form-control custom-input" id="categorySelection">
+                            <select class="form-control custom-input" id="categorySelection" th:field="*{category}">
                                 <option th:value="Main_dish">Main Dish</option>
                                 <option th:value="Soup">Soup</option>
                                 <option th:value="Salad">Salad</option>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="form-group col-4">
                             <label for="diffiultySelection">Recipe difficulty</label>
-                            <select class="form-control custom-input" id="diffiultySelection">
+                            <select class="form-control custom-input" id="diffiultySelection" th:field="*{difficulty}">
                                 <option th:value="Easy">Easy</option>
                                 <option th:value="Medium">Medium</option>
                                 <option th:value="Hard">Hard</option>
@@ -96,29 +96,27 @@
                     <div class="row">
                         <div class=" form-group col-4">
                             <label for="preparationTimeInput" style="margin-top:8px; margin-right: 10px">Preparation time:</label>
-                            <input id="preparationTimeInput" class="form-control" type="number" placeholder="0"/>
+                            <input id="preparationTimeInput" class="form-control" type="number" placeholder="0" th:field="*{preparationTime}"/>
                         </div>
                         <div class=" form-group col-4">
                             <label for="servingsInput" style="margin-top:8px; margin-right: 10px">Servings:</label>
-                            <input id="servingsInput" class="form-control" type="number" placeholder="0"/>
+                            <input id="servingsInput" class="form-control" type="number" placeholder="0" th:field="*{servings}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="descriptionInput">Description</label>
-                        <textarea class="form-control" rows="5" id="descriptionInput"></textarea>
+                        <textarea class="form-control" rows="5" id="descriptionInput" th:field="*{description}"></textarea>
                     </div>
 
                 </div>
                 <div class="tab-pane mt-2" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
-                    <div class="form-group">
-                        <div class="form-inline">
-                            <div class="form-group mx-sm-3 mb-2">
-                                <input class="form-control" placeholder="name" type="text"/>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="ingredientGroup">
+
                             </div>
-                            <div class="form-group mx-sm-3 mb-2">
-                                <input class="form-control" placeholder="amount"  type="text"/>
-                            </div>
-                            <button>X</button>
+                            <input id="jsonIngredients" type="hidden" th:field="*{jsonIngredientList}" name="ingredientNames" value="">
+                            <button id="addIngredient" type="button" class="offset-4 col-4 vtn btn-default mt-4">Add new ingredient</button>
                         </div>
                     </div>
                 </div>
@@ -138,5 +136,6 @@
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="/webjars/popper.js/1.14.1/popper.js"></script>
+<script src="js/add-recipe.js"></script>
 </body>
 </html>

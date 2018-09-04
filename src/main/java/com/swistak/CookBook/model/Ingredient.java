@@ -27,6 +27,12 @@ public class Ingredient {
         this.amount = amount;
     }
 
+    public Ingredient(String name, String amount, Recipe recipe) {
+        this.name = name;
+        this.amount = amount;
+        this.recipe = recipe;
+    }
+
     public long getId() {
         return id;
     }
@@ -49,5 +55,13 @@ public class Ingredient {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }
