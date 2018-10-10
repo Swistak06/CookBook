@@ -35,10 +35,15 @@ public class RecipeDto {
     @NotBlank
     private String description;
 
+    @NotBlank
+    private String jsonStepsList;
+
+    private String jsonImagesList;
+
     public RecipeDto() {
     }
 
-    public RecipeDto(@NotBlank String name, @NotBlank String formula, @NotNull RecipeCategory category, @NotNull RecipeDifficulty difficulty, @NotNull @Range(min = 0, max = 1500) int preparationTime, @NotNull @Range(min = 0, max = 1000) int servings, @NotBlank String jsonIngredientList, @NotBlank String description) {
+    public RecipeDto(@NotBlank String name, @NotBlank String formula, @NotNull RecipeCategory category, @NotNull RecipeDifficulty difficulty, @NotNull @Range(min = 0, max = 1500) int preparationTime, @NotNull @Range(min = 0, max = 1000) int servings, @NotBlank String jsonIngredientList, @NotBlank String description, @NotBlank String jsonStepsList, String jsonImagesList) {
         this.name = name;
         this.formula = formula;
         this.category = category;
@@ -47,6 +52,8 @@ public class RecipeDto {
         this.servings = servings;
         this.jsonIngredientList = jsonIngredientList;
         this.description = description;
+        this.jsonStepsList = jsonStepsList;
+        this.jsonImagesList = jsonImagesList;
     }
 
     public String getName() {
@@ -111,5 +118,21 @@ public class RecipeDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getJsonStepsList() {
+        return jsonStepsList;
+    }
+
+    public void setJsonStepsList(String jsonStepsList) {
+        this.jsonStepsList = jsonStepsList;
+    }
+
+    public String getJsonImagesList() {
+        return jsonImagesList;
+    }
+
+    public void setJsonImagesList(String jsonImagesList) {
+        this.jsonImagesList = jsonImagesList;
     }
 }

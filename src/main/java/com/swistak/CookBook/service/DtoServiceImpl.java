@@ -1,7 +1,9 @@
 package com.swistak.CookBook.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.swistak.CookBook.dto.ImageDto;
 import com.swistak.CookBook.dto.IngredientDto;
+import com.swistak.CookBook.dto.StepDto;
 import com.swistak.CookBook.model.Ingredient;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,11 @@ import java.util.List;
 public class DtoServiceImpl implements DtoService{
 
     @Override
-    public List<IngredientDto> convertJsonToList(String json) {
+    public List<IngredientDto> convertJsonIngredientList(String json) {
         List<IngredientDto> ingredientDtoList = null;
         try {
-            IngredientDto[] specArray = new ObjectMapper().readValue(json, IngredientDto[].class);
-            ingredientDtoList = Arrays.asList(specArray);
+            IngredientDto[] ingredientDtoArray = new ObjectMapper().readValue(json, IngredientDto[].class);
+            ingredientDtoList = Arrays.asList(ingredientDtoArray);
         }
         catch(Exception e){
 
@@ -25,16 +27,29 @@ public class DtoServiceImpl implements DtoService{
         return ingredientDtoList;
     }
 
-//    @Override
-//    public List<Ingredient> convertDtoToObject(List<IngredientDto> ingredientDtoList) {
-//        List<Ingredient> ingredientList = new ArrayList<>();
-//        for (IngredientDto i: ingredientDtoList
-//             ) {
-//            Ingredient ingredient = new Ingredient();
-//            ingredient.setName(i.getName());
-//            ingredient.setAmount(i.getValue());
-//            ingredientList.add(ingredient);
-//        }
-//        return ingredientList;
-//    }
+    @Override
+    public List<StepDto> convertJsonStepList(String json) {
+        List<StepDto> stepDtoList = null;
+        try{
+            StepDto[] stepDtoArray = new ObjectMapper().readValue(json, StepDto[].class);
+            stepDtoList = Arrays.asList(stepDtoArray);
+        }
+        catch(Exception e){
+
+        }
+        return stepDtoList;
+    }
+
+    @Override
+    public List<ImageDto> convertJsonImageList(String json) {
+        List<ImageDto> imageDtoList = null;
+        try{
+            ImageDto[] imageDtoArray = new ObjectMapper().readValue(json, ImageDto[].class);
+            imageDtoList = Arrays.asList(imageDtoArray);
+        }
+        catch(Exception e){
+
+        }
+        return imageDtoList;
+    }
 }
