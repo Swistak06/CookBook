@@ -61,6 +61,9 @@
                 <a class="nav-link" id="ingredients-tab" data-toggle="tab"  href="#ingredients" role="tab" aria-controls="ingredients" aria-selected="false">Ingredients</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" id="steps-tab" data-toggle="tab" href="#steps" role="tab" aria-controls="steps" aria-selected="false">Steps</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Images</a>
             </li>
         </ul>
@@ -113,15 +116,48 @@
                     <div class="row">
                         <div class="col-12">
                             <div id="ingredientGroup">
-
+                                <div class="form-inline ingredientbar">
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <input class="form-control ing" placeholder="name" type="text"/>
+                                    </div>
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <input class="form-control val" placeholder="amount"  type="text"/>
+                                    </div>
+                                </div>
                             </div>
                             <input id="jsonIngredients" type="hidden" th:field="*{jsonIngredientList}" name="ingredientNames" value="">
                             <button id="addIngredient" type="button" class="offset-4 col-4 vtn btn-default mt-4">Add new ingredient</button>
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane mt-2" id="steps" role="tabpanel" aria-labelledby="steps-tab">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-12" id="stepGroup">
+                                <div class="form-inline offset-2 col-6 stepbar">
+                                    <div class="form-group mx-sm-3 mb-2">
+                                         <textarea class="form-control descr" rows="4" placeholder="Step"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <input id="jsonSteps" type="hidden" th:field="*{jsonStepsList}" name="stepsNames" value="">
+                            <button id="addSteps" type="button" class="offset-4 col-4 vtn btn-default mt-4">Add new step</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="tab-pane mt-2" id="images" role="tabpanel" aria-labelledby="images-tab">
-                    <h1>gamma</h1>
+                    <div class="row">
+                        <div class="col-12 image-group">
+                            <input class="form-control recipe-image mx-sm-3 mb-2" type="text" placeholder="image URL"/>
+                        </div>
+                        <div class="col-12 image-group">
+                            <input class="form-control recipe-image mx-sm-3 mb-2" type="text" placeholder="image URL"/>
+                        </div>
+                        <div class="col-12 image-group">
+                            <input class="form-control recipe-image mx-sm-3 mb-2" type="text" placeholder="image URL"/>
+                        </div>
+                        <input id="jsonImages" type="hidden" th:field="*{jsonImagesList}" name="json-img" value="">
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn custom-red-button-logo btn-success" style="margin-bottom: 5px;">Add recipe</button>

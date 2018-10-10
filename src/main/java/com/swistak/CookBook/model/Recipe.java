@@ -41,6 +41,9 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Step> steps = new HashSet<>();
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Image> images = new ArrayList<>();
+
     public Recipe() {
     }
 
@@ -134,5 +137,11 @@ public class Recipe {
         this.steps = steps;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
 
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 }

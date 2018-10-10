@@ -22,6 +22,11 @@ public class Step {
     public Step() {
     }
 
+    public Step(@NotBlank String formula, Recipe recipe) {
+        this.formula = formula;
+        this.recipe = recipe;
+    }
+
     public Step(@NotBlank String formula) {
         this.formula = formula;
     }

@@ -1,7 +1,6 @@
 package com.swistak.CookBook.controller;
 
 import com.swistak.CookBook.dto.RecipeDto;
-import com.swistak.CookBook.service.DtoService;
 import com.swistak.CookBook.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +25,9 @@ public class RecipeController {
 
     @PostMapping("/addRecipe")
     public String saveRecipe(@Valid @ModelAttribute("recipe") RecipeDto recipeDto, BindingResult bindingResult){
-        System.out.println("kappa");
         System.out.println(recipeDto.getName());
-        System.out.println(recipeDto.getJsonIngredientList());
-        recipeService.saveRecipe(recipeDto);
+        System.out.println(recipeDto.getJsonImagesList());
+        recipeService.createAndSaveRecipeFromDto(recipeDto);
         return "redirect:/";
     }
 
