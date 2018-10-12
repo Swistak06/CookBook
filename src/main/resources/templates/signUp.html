@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Add Recipe</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Custom css-->
+    <link href="/css/custom-style.css" rel="stylesheet">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light navbar-top-custom">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse mr-auto mt-1 mb-1" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto col-3">
+                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">CookBook</a>
+                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">Add Recipe +</a>
+            </div>
+            <div class="navbar-nav mr-auto col-7">
+                <form class="input-group" th:action="@{/searchRecipe}" method="POST">
+                    <input style="width: 50%" type="text" class="form-control" placeholder="" aria-label=""
+                           aria-describedby="basic-addon1" name="searchedRecipeName">
+                    <select class="custom-select" id="inputGroupSelect01" name="searchedCategory">
+                        <option selected value="All">All Categories</option>
+                        <option value="Main dish">Main dish</option>
+                        <option value="Soups">Soups</option>
+                        <option value="Salads">Salads</option>
+                        <option value="Cakes">Cakes</option>
+                        <option value="Desserts">Desserts</option>
+                        <option value="Others">Others</option>
+
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary text-light" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+            <div class="navbar-nav mr-auto col-2">
+                <a>Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="offset-2 col-8">
+        <form th:method="post" th:object="${newUser}" th:action="@{/signUpUser}">
+            <label class="mt-2"  for="username">Username</label>
+            <input type="text" class="form-control" id="username" required placeholder="Username" th:field="*{username}">
+            <label class="mt-2"  for="password">Password</label>
+            <input type="password" class="form-control" id="password" required placeholder="Password" th:field="*{password}">
+            <label class="mt-2"  for="confirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" required placeholder="Confirm Password">
+            <label for="e-mail" class="mt-2">e-mail</label>
+            <input type="email" class="form-control" id="e-mail" required placeholder="e-mail" th:field="*{email}">
+            <button type="submit" class="btn btn-primary mt-1">Register</button>
+
+        </form>
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="/webjars/popper.js/1.14.1/popper.js"></script>
+</body>
+</html>
