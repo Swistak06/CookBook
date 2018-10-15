@@ -20,7 +20,7 @@ public class RecipeController {
     @GetMapping("/addRecipe")
     public String showAddRecipePage(Model model){
         model.addAttribute("recipe",new RecipeDto());
-        return "addRecipe";
+        return "add-recipe";
     }
 
     @PostMapping("/addRecipe")
@@ -28,7 +28,7 @@ public class RecipeController {
         System.out.println(recipeDto.getName());
         System.out.println(recipeDto.getJsonImagesList());
         recipeService.createAndSaveRecipeFromDto(recipeDto);
-        return "redirect:/";
+        return "redirect:index";
     }
 
 }
