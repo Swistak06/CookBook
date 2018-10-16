@@ -1,5 +1,6 @@
 package com.swistak.CookBook.model;
 
+import com.swistak.CookBook.dto.UserDto;
 import com.swistak.CookBook.model.Security.Authority;
 import com.swistak.CookBook.model.Security.UserRole;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,6 +43,17 @@ public class User implements UserDetails{
         this.username = username;
         this.email = email;
         this.password = password;
+        this.registrationDate = registrationDate;
+        isExpired = false;
+        isLocked = false;
+        isEnabled = false;
+    }
+
+    public User(UserDto userDto,Calendar registrationDate)
+    {
+        this.username = userDto.getUsername();
+        this.email = userDto.getEmail();
+        this.password = userDto.getPassword();
         this.registrationDate = registrationDate;
         isExpired = false;
         isLocked = false;

@@ -32,28 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/webjars/**",
-            "/api/**",
-            "/css/**",
-            "/js/**",
-            "/images/**",
             "/",
-            "/about/**",
-            "/contact/**",
-            "/error/**",
-            "/login",
-            "/register"
+
     };
 
     private static final String[] LOGGED_MATCHERS = {
-            "/cart",
-            "/cart/**",
-            "/product/follow",
-            "/followed",
-            "/addCartToSession",
-            "/settings",
-            "/settings/**",
-            "/user/*"
+            "/addRecipe"
+
     };
 
     private static final String[] ADMIN_MATCHERS = {
@@ -64,15 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(ADMIN_MATCHERS).hasRole("ADMIN")
-                .antMatchers(LOGGED_MATCHERS).hasAnyRole("ADMIN", "USER")
-                .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .and()
+                    .antMatchers(ADMIN_MATCHERS).hasRole("ADMIN")
+                    .antMatchers(LOGGED_MATCHERS).hasAnyRole("ADMIN", "USER")
+                    .antMatchers(PUBLIC_MATCHERS).permitAll()
+                    .and()
                 .formLogin()
-                .loginPage("/signIn")
-                .defaultSuccessUrl("/addCartToSession")
-                .failureUrl("/error")
-                .and()
+                    .loginPage("/signIn")
+                    .defaultSuccessUrl("/")
+                    .failureUrl("/error")
+                    .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 
     }
