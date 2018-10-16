@@ -15,6 +15,13 @@
     <!--Custom css-->
     <link href="/css/custom-style.css" rel="stylesheet">
 
+    <style>
+        a{
+            display: block;
+            padding-bottom: 5px;
+        }
+    </style>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light navbar-top-custom">
@@ -53,11 +60,12 @@
     <div class="offset-2 col-8 mt-2">
         <form class="card" method="post" th:action="@{/signIn}" >
             <div class="card-body">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control mb-2" id="username" name="username" placeholder="Username" required />
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control mb-3" id="password" name="password" placeholder="Password">
-                    <button class="btn btn-primary" type="submit">Sign in</button>
+                <label for="username">Username</label>
+                <input type="text" class="form-control mb-2" id="username" name="username" placeholder="Username" required />
+                <label for="password">Password</label>
+                <input type="password" class="form-control mb-3" id="password" name="password" placeholder="Password">
+                <a href="signUp">Don't have account?</a>
+                <button class="btn btn-primary" type="submit">Sign in</button>
             </div>
         </form>
     </div>

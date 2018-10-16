@@ -43,8 +43,17 @@
                     </div>
                 </form>
             </div>
-            <div class="navbar-nav mr-auto col-2">
-                <a>Login</a>
+            <div class="navbar-nav mr-auto">
+                    <a sec:authorize="isAuthenticated()" role="button" class="btn btn-primary ml-3 mr-3" th:href="@{signIn}"> Login</a>
+                <!--<div sec:authorize="isAuthenticated()" class="dropdown show">-->
+                    <!--<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                        <!--My Account-->
+                    <!--</a>-->
+                    <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+                        <!--<a class="dropdown-item">My Profile</a>-->
+                        <!--<a class="dropdown-item" th:href="@{/logout}">Logout</a>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
