@@ -47,6 +47,9 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecipeRate> recipeRates = new HashSet<>();
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RecipePreparation> recipePreparations = new HashSet<>();
+
     public Recipe() {
     }
 
@@ -154,5 +157,13 @@ public class Recipe {
 
     public void setRecipeRates(Set<RecipeRate> recipeRates) {
         this.recipeRates = recipeRates;
+    }
+
+    public Set<RecipePreparation> getRecipePreparations() {
+        return recipePreparations;
+    }
+
+    public void setRecipePreparations(Set<RecipePreparation> recipePreparations) {
+        this.recipePreparations = recipePreparations;
     }
 }

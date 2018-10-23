@@ -5,6 +5,7 @@ import com.swistak.CookBook.dto.IngredientDto;
 import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.dto.StepDto;
 import com.swistak.CookBook.model.*;
+import com.swistak.CookBook.repository.RecipePreparationRepository;
 import com.swistak.CookBook.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class RecipeServiceImpl implements RecipeService{
     @Autowired
     RecipeRepository recipeRepository;
 
+    @Autowired
+    RecipePreparationRepository recipePreparationRepository;
+
     private DtoService dtoService;
 
     public RecipeServiceImpl(DtoService dtoService) {
@@ -24,10 +28,10 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public Recipe createAndSaveRecipeFromDto(RecipeDto recipeDto) {
+    public Recipe createAndSaveRecipeFromDto(RecipeDto recipeDto, User owner) {
 
         Recipe recipe = new Recipe(recipeDto.getName(),recipeDto.getDescription(),recipeDto.getCategory(),recipeDto.getDifficulty(),
-                recipeDto.getPreparationTime(), recipeDto.getServings(),new User());
+                recipeDto.getPreparationTime(), recipeDto.getServings(), owner);
 
         List<IngredientDto> ingredientDtoList = dtoService.convertJsonIngredientList(recipeDto.getJsonIngredientList());
         for (IngredientDto i : ingredientDtoList
@@ -57,5 +61,10 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public Recipe findByID(long id) {
         return recipeRepository.findById(id);
+    }
+
+    @Override
+    public long countNumberOfPreparations(Recipe recipe) {
+        return recipePreparationRepository.countByRecipeId(recipe.getId());
     }
 }

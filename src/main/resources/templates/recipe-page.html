@@ -63,51 +63,52 @@
 <div class="container">
     <div class="row mt-1" th:object="${recipe}">
         <h2 class="col-12 mt-5" th:text="*{name}"> </h2>
-        <div class="card col-3 mt-5 mb-5 pt-5 pb-5">
-            <div class="card-body">
-                <h5 class="card-title mt-4">Rate:</h5>
-                <h5 class="card-title">Made it:</h5>
-                <h5 class="card-title" th:text="'Author: ' + ${recipe.getUser().getUsername()}"></h5>
-            </div>
-        </div>
-        <div class="col-6">
-            <div id="photosCarousel" class="carousel slide" data-ride="carousel"
-                 style="width: 540px; height: 370px">
-                <div class="carousel-inner">
-                    <div class="carousel-item" th:each="image:*{images}" th:classappend="${imageStat.first}?'active'">
-                        <img class="d-block w-100 card-image" th:src="${image.url}">
-                    </div>
+
+        <div class="row col-12 mt-1 mb-1">
+            <div class="card col-3">
+                <div class="card-body">
+                    <h5 class="card-title mt-2" th:text="'Type: ' + ${recipe.getCategory()}"></h5>
+                    <h5 class="card-title mt-2" th:text="'Preparation time: ' + ${recipe.getPreparationTime()}"></h5>
+                    <h5 class="card-title mt-2" th:text="'Difficulty: ' + ${recipe.getDifficulty()}"></h5>
+                    <h5 class="card-title mt-2" th:text="'Servings: ' + ${recipe.getServings()}"></h5>
+                    <h5 class="card-title mt-4">Rate:</h5>
+                    <h5 class="card-title" th:text="'Made it: '+ ${preparations}"></h5>
+                    <h5 class="card-title" th:text="'Author: ' + ${recipe.getUser().getUsername()}"></h5>
                 </div>
-                <a class="carousel-control-prev" href="#photosCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#photosCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
-        </div>
-        <div class="card col-3 mt-5 mb-5 pt-5 pb-5">
-            <div class="card-body">
-                <h5 class="card-title mt-2" th:text="'Type: ' + ${recipe.getCategory()}"></h5>
-                <h5 class="card-title mt-2" th:text="'Preparation time: ' + ${recipe.getPreparationTime()}"></h5>
-                <h5 class="card-title mt-2" th:text="'Difficulty: ' + ${recipe.getDifficulty()}"></h5>
-                <h5 class="card-title mt-2" th:text="'Servings: ' + ${recipe.getServings()}"></h5>
+            <div class="col-6">
+                <div id="photosCarousel mt-1" class="carousel slide" data-ride="carousel"
+                     style="height: 290px">
+                    <div class="carousel-inner">
+                        <div class="carousel-item" th:each="image:*{images}" th:classappend="${imageStat.first}?'active'">
+                            <img class="d-block w-100 card-image" th:src="${image.url}" width="560px"  height="290" >
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#photosCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#photosCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="row mt-5 md-1 col-12">
-            <button class="btn btn-primary offset-2 col-2 ml-1">Save</button>
-            <button class="btn btn-danger col-2 ml-1">I made it</button>
-            <button class="btn btn-primary col-2 ml-1">Rate</button>
-            <button class="btn btn-danger col-2">Comment</button>
-        </div>
-        <div class="jumbotron mt-3 col-12">
-            <p th:text="${recipe.getDescription()}"></p>
+            <div class="jumbotron col-3">
+                <p th:text="${recipe.getDescription()}"></p>
+            </div>
+            <div class="row mt-5 md-1 col-12">
+                <button class="btn btn-primary offset-2 col-2 mr-1">Save</button>
+                <button class="btn btn-danger col-2 mr-1">I made it</button>
+                <button class="btn btn-primary col-2 mr-1">Rate</button>
+                <button class="btn btn-danger col-2">Comment</button>
+            </div>
         </div>
 
-        <div class="mt-5 mb-3 col-6">
-            <h2 class="mb-4 mt-5">Preparation </h2>
+
+
+        <div class="mt-2 mb-3 col-6 pb-2">
+            <h2 class="mt-1">Preparation </h2>
             <table class="table table-striped">
                 <tbody id="stepTable">
                 <tr th:each="step:*{steps}">
@@ -116,8 +117,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-5 col-6">
-            <h2 class="mb-4 mt-5">Ingredients </h2>
+        <div class="mt-2 mb-3 pb-2 col-6 ">
+            <h2 class="1 ">Ingredients </h2>
             <table class="table table-striped">
                 <tbody id="ingredientTable">
                 <tr th:each="ing:*{ingredients}">

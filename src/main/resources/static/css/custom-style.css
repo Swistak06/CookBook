@@ -12,3 +12,10 @@
 .navbar-button-custom:hover{
     background-color: #cc0000;
 }
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #ff9933;
+}
+/*.table-striped > tbody > tr:nth-child(even) > td, .table-striped > tbody > tr:nth-child(even) > th {*/
+    /*background-color: #ff9900;*/
+/*}*/

@@ -69,6 +69,9 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<RecipeRate> recipeRates = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RecipePreparation> recipePreparations = new HashSet<>();
+
     @Override
     public boolean isAccountNonExpired() {
         return !isExpired;

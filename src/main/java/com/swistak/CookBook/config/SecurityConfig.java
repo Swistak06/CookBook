@@ -37,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     };
 
     private static final String[] LOGGED_MATCHERS = {
-            "/addRecipe"
+            "/addRecipe",
+            "/recipe/*"
 
     };
 
