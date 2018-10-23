@@ -35,4 +35,17 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
+    @Override
+    public void createStartupUsers() {
+        if (userRepository.findByUsername("User") == null)
+        {
+            User user = new User("User","user@mail.com","password",Calendar.getInstance());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setEnabled(true);
+            roleService.addUserRole(user);
+            userRepository.save(user);
+        }
+    }
+
+
 }

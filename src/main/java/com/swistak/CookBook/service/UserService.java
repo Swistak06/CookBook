@@ -6,4 +6,5 @@ import com.swistak.CookBook.model.User;
 public interface UserService {
     User findByUsername(String username);
     User registerUser(UserDto userDto);
+    void createStartupUsers();
 }

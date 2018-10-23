@@ -46,14 +46,16 @@ public class RecipeServiceImpl implements RecipeService{
                 ) {
             recipe.getImages().add(new Image(image.getValue(),recipe));
         }
-
-
-
         return save(recipe);
     }
 
     @Override
     public Recipe save(Recipe recipe) {
         return recipeRepository.save(recipe);
+    }
+
+    @Override
+    public Recipe findByID(long id) {
+        return recipeRepository.findById(id);
     }
 }

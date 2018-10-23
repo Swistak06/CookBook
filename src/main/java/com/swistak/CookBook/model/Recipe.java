@@ -39,10 +39,13 @@ public class Recipe {
     private List<Ingredient> ingredients = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe" ,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Step> steps = new HashSet<>();
+    private List<Step> steps = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Image> images = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RecipeRate> recipeRates = new HashSet<>();
 
     public Recipe() {
     }
@@ -129,11 +132,11 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public Set<Step> getSteps() {
+    public List<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(Set<Step> steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 
@@ -143,5 +146,13 @@ public class Recipe {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public Set<RecipeRate> getRecipeRates() {
+        return recipeRates;
+    }
+
+    public void setRecipeRates(Set<RecipeRate> recipeRates) {
+        this.recipeRates = recipeRates;
     }
 }
