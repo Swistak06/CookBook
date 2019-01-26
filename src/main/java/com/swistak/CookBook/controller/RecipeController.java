@@ -29,12 +29,10 @@ public class RecipeController {
     public String showRecipePAge(@PathVariable("id") long id, Model model)
     {
         Recipe recipe = recipeService.findByID(id);
-        long preparations = recipeService.countNumberOfPreparations(recipe);
         if(recipe == null)
             return "redirect/";
         model.addAttribute("recipe", recipe);
-        model.addAttribute("preparations",preparations);
-
+        System.out.println(recipe.getUser().getUsername());
         return "recipe-page";
     }
 

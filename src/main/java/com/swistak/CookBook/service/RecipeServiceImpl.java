@@ -46,10 +46,13 @@ public class RecipeServiceImpl implements RecipeService{
         }
 
         List<ImageDto> imageDtoList = dtoService.convertJsonImageList(recipeDto.getJsonImagesList());
-        for (ImageDto image : imageDtoList
-                ) {
-            recipe.getImages().add(new Image(image.getValue(),recipe));
+        if(imageDtoList != null ){
+            for (ImageDto image : imageDtoList
+                    ) {
+                recipe.getImages().add(new Image(image.getValue(),recipe));
+            }
         }
+
         return save(recipe);
     }
 
