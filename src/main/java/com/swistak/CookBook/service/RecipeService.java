@@ -9,7 +9,6 @@ public interface RecipeService {
     Recipe save(Recipe recipe);
     Recipe findByID(long id);
     void addOrRemoveLikeFromRecipe(Recipe recipe, User user);
-    long countLikesOfRecipe(Recipe recipe);
-    long countNumberOfPreparations(Recipe recipe);
+    void addOrRemovePrepFromRecipe(Recipe recipe, User user);
 
 }

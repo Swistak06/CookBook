@@ -31,6 +31,9 @@ public class Recipe {
 
     private int servings;
 
+    private long likes = 0;
+    private long preparationsByUsers = 0;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
@@ -63,6 +66,18 @@ public class Recipe {
         this.difficulty = difficulty;
         this.preparationTime = preparationTime;
         this.servings = servings;
+        this.user = user;
+    }
+
+    public Recipe(String name, String description, RecipeCategory category, RecipeDifficulty difficulty, int preparationTime, int servings, long likes, long preparationsByUsers, User user) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.difficulty = difficulty;
+        this.preparationTime = preparationTime;
+        this.servings = servings;
+        this.likes = likes;
+        this.preparationsByUsers = preparationsByUsers;
         this.user = user;
     }
 
@@ -168,5 +183,42 @@ public class Recipe {
 
     public void setRecipePreparations(Set<RecipePreparation> recipePreparations) {
         this.recipePreparations = recipePreparations;
+    }
+
+    public long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(long likes) {
+        this.likes = likes;
+    }
+
+    public long getPreparationsByUsers() {
+        return preparationsByUsers;
+    }
+
+    public void setPreparationsByUsers(long preparationsByUsers) {
+        this.preparationsByUsers = preparationsByUsers;
+    }
+
+    public Set<RecipePreparation> getRecipeLikes() {
+        return recipeLikes;
+    }
+
+    public void setRecipeLikes(Set<RecipePreparation> recipeLikes) {
+        this.recipeLikes = recipeLikes;
+    }
+
+    public void addOneLike(){
+        likes++;
+    }
+    public void removeOneLike(){
+        likes--;
+    }
+    public void addOnePreparation(){
+        preparationsByUsers++;
+    }
+    public void removeOnePreparation(){
+        preparationsByUsers--;
     }
 }

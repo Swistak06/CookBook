@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RecipePreparationRepository extends JpaRepository<RecipePreparation,Long>{
     Long countByRecipeId(long id);
+    RecipePreparation findByUserIdAndRecipeId(long user_id, long recipe_id);
 }

@@ -10,11 +10,11 @@ public class RecipePreparation {
     @Column(name = "RecipePreparation_id")
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="user_id")
     User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     Recipe recipe;
 

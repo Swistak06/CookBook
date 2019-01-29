@@ -19,6 +19,13 @@ public class RecipeComponentsRestController {
     @ResponseBody
     public long getRecipeLikesNumber(@PathVariable("id") long id){
         Recipe recipe = recipeService.findByID(id);
-        return recipeService.countLikesOfRecipe(recipe);
+        return recipe.getLikes();
+    }
+
+    @GetMapping("/api/prepareRecipe/recipe{id}")
+    @ResponseBody
+    public long getRecipePreparationsNumber(@PathVariable("id") long id){
+        Recipe recipe = recipeService.findByID(id);
+        return recipe.getPreparationTime();
     }
 }

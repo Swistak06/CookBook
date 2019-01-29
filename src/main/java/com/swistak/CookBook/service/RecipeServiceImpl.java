@@ -73,19 +73,31 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public void addOrRemoveLikeFromRecipe(Recipe recipe, User user) {
         RecipeLike recipeLike = recipeLikeRepository.findByUserIdAndRecipeId(user.getId(),recipe.getId());
-        if(recipeLike == null)
+        if(recipeLike == null){
             recipeLikeRepository.save(new RecipeLike(user,recipe));
-        else
+            recipe.addOneLike();
+            recipeRepository.save(recipe);
+        }
+        else{
             recipeLikeRepository.delete(recipeLike);
+            recipe.removeOneLike();
+            recipeRepository.save(recipe);
+        }
+
     }
 
     @Override
-    public long countLikesOfRecipe(Recipe recipe) {
-        return recipeLikeRepository.countByRecipeId(recipe.getId()) == null ? 0 : recipeLikeRepository.countByRecipeId(recipe.getId());
-    }
-
-    @Override
-    public long countNumberOfPreparations(Recipe recipe) {
-        return recipePreparationRepository.countByRecipeId(recipe.getId());
+    public void addOrRemovePrepFromRecipe(Recipe recipe, User user) {
+        RecipePreparation recipePreparation = recipePreparationRepository.findByUserIdAndRecipeId(user.getId(),recipe.getId());
+        if(recipePreparation == null){
+            recipePreparationRepository.save(new RecipePreparation(user,recipe));
+            recipe.addOnePreparation();
+            recipeRepository.save(recipe);
+        }
+        else{
+            recipePreparationRepository.delete(recipePreparation);
+            recipe.removeOnePreparation();
+            recipeRepository.save(recipe);
+        }
     }
 }

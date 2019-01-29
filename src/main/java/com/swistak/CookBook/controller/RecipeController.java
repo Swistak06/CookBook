@@ -27,12 +27,9 @@ public class RecipeController {
     public String showRecipePage(@PathVariable("id") long id, Model model)
     {
         Recipe recipe = recipeService.findByID(id);
-        long likes = recipeService.countLikesOfRecipe(recipe);
         if(recipe == null)
             return "redirect/";
         model.addAttribute("recipe", recipe);
-        model.addAttribute("likes", likes);
-        System.out.println(recipe.getUser().getUsername());
         return "recipe-page";
     }
 
@@ -56,5 +53,14 @@ public class RecipeController {
         recipeService.addOrRemoveLikeFromRecipe(recipe,user);
         return "redirect:" + referer;
     }
+
+    @PostMapping("/prepareRecipe/{id}")
+    public String addPreparationToRecipe(@PathVariable("id") long id, Principal principal, @RequestHeader("Referer") String referer){
+        User user = userService.findByUsername(principal.getName());
+        Recipe recipe = recipeService.findByID(id);
+        recipeService.addOrRemovePrepFromRecipe(recipe,user);
+        return "redirect:" + referer;
+    }
+
 
 }
