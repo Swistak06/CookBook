@@ -70,6 +70,9 @@ public class User implements UserDetails{
     private Set<RecipeRate> recipeRates = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RecipePreparation> recipeLikes = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecipePreparation> recipePreparations = new HashSet<>();
 
     @Override

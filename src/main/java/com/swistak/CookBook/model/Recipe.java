@@ -48,6 +48,9 @@ public class Recipe {
     private Set<RecipeRate> recipeRates = new HashSet<>();
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RecipePreparation> recipeLikes = new HashSet<>();
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecipePreparation> recipePreparations = new HashSet<>();
 
     public Recipe() {

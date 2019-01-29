@@ -73,7 +73,7 @@
         <div class="row col-12 mt-1 mb-1 pl-0 pr-0 ml-0 mr-0">
             <div class="card col-3">
                 <div class="card-body">
-                    <h5 class="card-title mt-5">Rate:</h5>
+                    <h5 class="card-title mt-5" id="recipeLikesLabel" th:text="'Likes: ' + ${likes}"></h5>
                     <h5 class="card-title" th:text="'Made it: '"></h5>
                     <h5 class="card-title" th:text="'Author: ' + ${recipe.getUser().getUsername()}"></h5>
                 </div>
@@ -108,7 +108,9 @@
             <div class="row mt-5 md-1 col-12 mr-0 pr-0 ml-0 pl-0">
                 <button class="btn btn-primary col-3">Save</button>
                 <button class="btn btn-danger col-3">I made it</button>
-                <button class="btn btn-primary col-3">Rate</button>
+                <form th:method="POST" th:action="@{'/likeRecipe/' + ${recipe.getId()}}">
+                    <button class="btn btn-primary col-3" id="likeItButton" >I like it</button>
+                </form>
                 <button class="btn btn-danger col-3">Comment</button>
             </div>
         </div>
@@ -145,5 +147,27 @@
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="/webjars/popper.js/1.14.1/popper.js"></script>
+
+<script th:inline="javascript">
+    $("#likeItButton").click(function(){
+        var id = /*[[${recipe.getId()}]]*/ 'default';
+        var urlString = '/api/likeRecipe/recipe' + id;
+        console.log(urlString)
+        $.ajax({
+            type: "GET",
+            url: urlString,
+            success: function (data) {
+                $("#recipeLikesLabel").text('Likes: ' + data)
+            }
+        });
+
+    });
+
+
+
+
+
+    /*]]>*/
+</script>
 </body>
 </html>

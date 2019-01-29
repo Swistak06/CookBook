@@ -5,6 +5,7 @@ import com.swistak.CookBook.dto.IngredientDto;
 import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.dto.StepDto;
 import com.swistak.CookBook.model.*;
+import com.swistak.CookBook.repository.RecipeLikeRepository;
 import com.swistak.CookBook.repository.RecipePreparationRepository;
 import com.swistak.CookBook.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Autowired
     RecipeRepository recipeRepository;
+
+    @Autowired
+    RecipeLikeRepository recipeLikeRepository;
 
     @Autowired
     RecipePreparationRepository recipePreparationRepository;
@@ -64,6 +68,20 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public Recipe findByID(long id) {
         return recipeRepository.findById(id);
+    }
+
+    @Override
+    public void addOrRemoveLikeFromRecipe(Recipe recipe, User user) {
+        RecipeLike recipeLike = recipeLikeRepository.findByUserIdAndRecipeId(user.getId(),recipe.getId());
+        if(recipeLike == null)
+            recipeLikeRepository.save(new RecipeLike(user,recipe));
+        else
+            recipeLikeRepository.delete(recipeLike);
+    }
+
+    @Override
+    public long countLikesOfRecipe(Recipe recipe) {
+        return recipeLikeRepository.countByRecipeId(recipe.getId()) == null ? 0 : recipeLikeRepository.countByRecipeId(recipe.getId());
     }
 
     @Override
