@@ -1,7 +1,5 @@
 package com.swistak.CookBook.dto;
 
-import com.swistak.CookBook.model.RecipeCategory;
-import com.swistak.CookBook.model.RecipeDifficulty;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
@@ -15,11 +13,11 @@ public class RecipeDto {
     @NotBlank
     private String formula;
 
-    @NotNull
-    private RecipeCategory category;
+    @NotBlank
+    private String category;
 
     @NotNull
-    private RecipeDifficulty difficulty;
+    private String difficulty;
 
     @NotNull
     @Range(min = 0,max = 1500)
@@ -43,7 +41,7 @@ public class RecipeDto {
     public RecipeDto() {
     }
 
-    public RecipeDto(@NotBlank String name, @NotBlank String formula, @NotNull RecipeCategory category, @NotNull RecipeDifficulty difficulty, @NotNull @Range(min = 0, max = 1500) int preparationTime, @NotNull @Range(min = 0, max = 1000) int servings, @NotBlank String jsonIngredientList, @NotBlank String description, @NotBlank String jsonStepsList, String jsonImagesList) {
+    public RecipeDto(@NotBlank String name, @NotBlank String formula, @NotNull String category, @NotNull String difficulty, @NotNull @Range(min = 0, max = 1500) int preparationTime, @NotNull @Range(min = 0, max = 1000) int servings, @NotBlank String jsonIngredientList, @NotBlank String description, @NotBlank String jsonStepsList, String jsonImagesList) {
         this.name = name;
         this.formula = formula;
         this.category = category;
@@ -59,79 +57,60 @@ public class RecipeDto {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getFormula() {
         return formula;
     }
-
     public void setFormula(String formula) {
         this.formula = formula;
     }
-
-    public RecipeCategory getCategory() {
+    public String getCategory() {
         return category;
     }
-
-    public void setCategory(RecipeCategory category) {
+    public void setCategory(String category) {
         this.category = category;
     }
-
-    public RecipeDifficulty getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
-
-    public void setDifficulty(RecipeDifficulty difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
-
     public int getPreparationTime() {
         return preparationTime;
     }
-
     public void setPreparationTime(int preparationTime) {
         this.preparationTime = preparationTime;
     }
-
     public int getServings() {
         return servings;
     }
-
     public void setServings(int servings) {
         this.servings = servings;
     }
-
     public String getJsonIngredientList() {
         return jsonIngredientList;
     }
-
     public void setJsonIngredientList(String jsonIngredientList) {
         this.jsonIngredientList = jsonIngredientList;
     }
-
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
-
     public String getJsonStepsList() {
         return jsonStepsList;
     }
-
     public void setJsonStepsList(String jsonStepsList) {
         this.jsonStepsList = jsonStepsList;
     }
-
     public String getJsonImagesList() {
         return jsonImagesList;
     }
-
     public void setJsonImagesList(String jsonImagesList) {
         this.jsonImagesList = jsonImagesList;
     }

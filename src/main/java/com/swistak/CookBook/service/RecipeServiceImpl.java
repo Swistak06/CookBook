@@ -11,6 +11,7 @@ import com.swistak.CookBook.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -37,26 +38,24 @@ public class RecipeServiceImpl implements RecipeService{
         Recipe recipe = new Recipe(recipeDto.getName(),recipeDto.getDescription(),recipeDto.getCategory(),recipeDto.getDifficulty(),
                 recipeDto.getPreparationTime(), recipeDto.getServings(), owner);
 
+
         List<IngredientDto> ingredientDtoList = dtoService.convertJsonIngredientList(recipeDto.getJsonIngredientList());
-        for (IngredientDto i : ingredientDtoList
-             ) {
+        for (IngredientDto i : ingredientDtoList) {
             recipe.getIngredients().add(new Ingredient(i.getName(),i.getValue(),recipe));
         }
 
         List<StepDto> stepDtoList = dtoService.convertJsonStepList(recipeDto.getJsonStepsList());
-        for (StepDto step : stepDtoList
-                ) {
+        for (StepDto step : stepDtoList) {
             recipe.getSteps().add(new Step(step.getValue(),recipe));
         }
 
         List<ImageDto> imageDtoList = dtoService.convertJsonImageList(recipeDto.getJsonImagesList());
         if(imageDtoList != null ){
-            for (ImageDto image : imageDtoList
-                    ) {
+            for (ImageDto image : imageDtoList) {
                 recipe.getImages().add(new Image(image.getValue(),recipe));
             }
         }
-
+        recipe.setAddingDate(Calendar.getInstance());
         return save(recipe);
     }
 
@@ -99,5 +98,10 @@ public class RecipeServiceImpl implements RecipeService{
             recipe.removeOnePreparation();
             recipeRepository.save(recipe);
         }
+    }
+
+    @Override
+    public List<Recipe> findNewestRecipes() {
+        return recipeRepository.findTop5ByAddingDateIsNotNullOrderByAddingDateDesc();
     }
 }

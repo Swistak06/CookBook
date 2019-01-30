@@ -1,12 +1,7 @@
 package com.swistak.CookBook.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "recipes")
@@ -20,11 +15,9 @@ public class Recipe {
     private String name;
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private RecipeCategory category;
+    private String category;
 
-    @Enumerated(EnumType.STRING)
-    private RecipeDifficulty difficulty;
+    private String difficulty;
 
     @Column(name = "time")
     private int preparationTime;
@@ -33,6 +26,8 @@ public class Recipe {
 
     private long likes = 0;
     private long preparationsByUsers = 0;
+
+    private Calendar addingDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -59,7 +54,7 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(String name, String description, RecipeCategory category, RecipeDifficulty difficulty, int preparationTime, int servings, User user) {
+    public Recipe(String name, String description, String category, String difficulty, int preparationTime, int servings, User user) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -69,7 +64,7 @@ public class Recipe {
         this.user = user;
     }
 
-    public Recipe(String name, String description, RecipeCategory category, RecipeDifficulty difficulty, int preparationTime, int servings, long likes, long preparationsByUsers, User user) {
+    public Recipe(String name, String description, String category, String difficulty, int preparationTime, int servings, long likes, long preparationsByUsers, User user) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -84,129 +79,104 @@ public class Recipe {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public RecipeCategory getCategory() {
+    public String getCategory() {
         return category;
     }
-
-    public void setCategory(RecipeCategory category) {
+    public void setCategory(String category) {
         this.category = category;
     }
-
-    public RecipeDifficulty getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
-
-    public void setDifficulty(RecipeDifficulty difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
-
     public int getPreparationTime() {
         return preparationTime;
     }
-
     public void setPreparationTime(int preparationTime) {
         this.preparationTime = preparationTime;
     }
-
     public int getServings() {
         return servings;
     }
-
     public void setServings(int servings) {
         this.servings = servings;
     }
-
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
-
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
-
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
-
     public List<Step> getSteps() {
         return steps;
     }
-
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
-
     public List<Image> getImages() {
         return images;
     }
-
     public void setImages(List<Image> images) {
         this.images = images;
     }
-
     public Set<RecipeRate> getRecipeRates() {
         return recipeRates;
     }
-
     public void setRecipeRates(Set<RecipeRate> recipeRates) {
         this.recipeRates = recipeRates;
     }
-
     public Set<RecipePreparation> getRecipePreparations() {
         return recipePreparations;
     }
-
     public void setRecipePreparations(Set<RecipePreparation> recipePreparations) {
         this.recipePreparations = recipePreparations;
     }
-
     public long getLikes() {
         return likes;
     }
-
     public void setLikes(long likes) {
         this.likes = likes;
     }
-
     public long getPreparationsByUsers() {
         return preparationsByUsers;
     }
-
     public void setPreparationsByUsers(long preparationsByUsers) {
         this.preparationsByUsers = preparationsByUsers;
     }
-
     public Set<RecipePreparation> getRecipeLikes() {
         return recipeLikes;
     }
-
     public void setRecipeLikes(Set<RecipePreparation> recipeLikes) {
         this.recipeLikes = recipeLikes;
+    }
+    public Calendar getAddingDate() {
+        return addingDate;
+    }
+    public void setAddingDate(Calendar addingDate) {
+        this.addingDate = addingDate;
     }
 
     public void addOneLike(){
