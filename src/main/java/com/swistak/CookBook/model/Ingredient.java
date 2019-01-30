@@ -1,6 +1,7 @@
 package com.swistak.CookBook.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "ingredients")
@@ -11,8 +12,10 @@ public class Ingredient {
     @Column(name = "ingredient_id")
     private long id;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String amount;
 
     @ManyToOne(cascade = CascadeType.ALL)
