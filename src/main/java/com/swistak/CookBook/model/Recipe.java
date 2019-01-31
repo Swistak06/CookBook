@@ -46,9 +46,6 @@ public class Recipe {
     private Set<RecipeRate> recipeRates = new HashSet<>();
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<RecipePreparation> recipeLikes = new HashSet<>();
-
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecipePreparation> recipePreparations = new HashSet<>();
 
     public Recipe() {
@@ -165,12 +162,6 @@ public class Recipe {
     }
     public void setPreparationsByUsers(long preparationsByUsers) {
         this.preparationsByUsers = preparationsByUsers;
-    }
-    public Set<RecipePreparation> getRecipeLikes() {
-        return recipeLikes;
-    }
-    public void setRecipeLikes(Set<RecipePreparation> recipeLikes) {
-        this.recipeLikes = recipeLikes;
     }
     public Calendar getAddingDate() {
         return addingDate;

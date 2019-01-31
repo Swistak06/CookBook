@@ -16,5 +16,5 @@ public interface RecipeRepository extends JpaRepository<Recipe,Long>{
 
      @Query("select r from Recipe r order by r.addingDate desc")
      List<Recipe> findFiveNewestProducts();
-     List<Recipe> findTop5ByAddingDateIsNotNullOrderByAddingDateDesc();
+     List<Recipe> findTop4ByAddingDateIsNotNullOrderByAddingDateDesc();
 }

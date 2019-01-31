@@ -2,7 +2,6 @@ package com.swistak.CookBook.controller;
 
 import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.model.Recipe;
-import com.swistak.CookBook.model.RecipeLike;
 import com.swistak.CookBook.model.User;
 import com.swistak.CookBook.service.RecipeService;
 import com.swistak.CookBook.service.UserService;

@@ -1,6 +1,5 @@
 package com.swistak.CookBook.repository;
 
-import com.swistak.CookBook.model.RecipeLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

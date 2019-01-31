@@ -16,7 +16,7 @@ public class RecipeDto {
     @NotBlank
     private String category;
 
-    @NotNull
+    @NotBlank
     private String difficulty;
 
     @NotNull

@@ -102,6 +102,6 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public List<Recipe> findNewestRecipes() {
-        return recipeRepository.findTop5ByAddingDateIsNotNullOrderByAddingDateDesc();
+        return recipeRepository.findTop4ByAddingDateIsNotNullOrderByAddingDateDesc();
     }
 }
