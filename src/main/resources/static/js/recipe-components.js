@@ -13,14 +13,15 @@ $("#likeItButton").click(function(){
 });
 
 $("#madeItButton").click(function(){
-    var id = /*[[${recipe.getId()}]]*/ 'default';
+    var id = $(this).parent().attr('name');
     var urlString = '/api/prepareRecipe/recipe' + id;
-    console.log(urlString)
+    $("#recipePreparationNumberLabel").text('Made it: juhu')
     $.ajax({
         type: "GET",
         url: urlString,
         success: function (data) {
             $("#recipePreparationNumberLabel").text('Made it: ' + data)
         }
+
     });
 });

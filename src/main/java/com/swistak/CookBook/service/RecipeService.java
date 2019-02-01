@@ -10,7 +10,6 @@ public interface RecipeService {
     Recipe createAndSaveRecipeFromDto(RecipeDto recipeDto, User user);
     Recipe save(Recipe recipe);
     Recipe findByID(long id);
-    void addOrRemoveLikeFromRecipe(Recipe recipe, User user);
     void addOrRemovePrepFromRecipe(Recipe recipe, User user);
     List<Recipe> findNewestRecipes();
 }

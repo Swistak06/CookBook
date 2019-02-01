@@ -105,13 +105,11 @@
                 </div>
             </div>
 
-            <div class="row mt-5 md-1 col-12 mr-0 pr-0 ml-0 pl-0">
+            <div class="row mt-5 md-1 col-12 mr-0 pr-0 ml-0 pl-0" th:name="${recipe.id}">
                 <form class="col-4">
                     <button class="btn btn-primary col-12">Save</button>
                 </form>
-                <form class="col-4" th:method="POST" th:action="@{'/prepareRecipe/' + ${recipe.getId()}}">
-                    <button class="btn btn-danger col-12" id="madeItButton">I made it</button>
-                </form>
+                    <button class="btn btn-danger col-4" id="madeItButton" >I made it</button>
                 <form class="col-4" th:method="POST" th:action="@{'/likeRecipe/' + ${recipe.getId()}}">
                     <button class="btn btn-primary col-12" id="likeItButton" >I like it</button>
                 </form>
@@ -150,7 +148,7 @@
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="/webjars/popper.js/1.14.1/popper.js"></script>
-<script scr="/js/recipe-components.js"></script>
+<script th:inline="javascript" src="/js/recipe-components.js"></script>
 
 </body>
 </html>

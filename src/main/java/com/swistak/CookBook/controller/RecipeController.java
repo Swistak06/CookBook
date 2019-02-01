@@ -49,7 +49,6 @@ public class RecipeController {
     public String addLikeToRecipe(@PathVariable("id") long id, Principal principal, @RequestHeader("Referer") String referer){
         User user = userService.findByUsername(principal.getName());
         Recipe recipe = recipeService.findByID(id);
-        recipeService.addOrRemoveLikeFromRecipe(recipe,user);
         return "redirect:" + referer;
     }
 
