@@ -24,10 +24,11 @@ public class Recipe {
 
     private int servings;
 
-    private long likes = 0;
     private long preparationsByUsers = 0;
 
     private Calendar addingDate;
+    private double averageRate = 0.0;
+    private int numberOfRates = 0;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -61,14 +62,13 @@ public class Recipe {
         this.user = user;
     }
 
-    public Recipe(String name, String description, String category, String difficulty, int preparationTime, int servings, long likes, long preparationsByUsers, User user) {
+    public Recipe(String name, String description, String category, String difficulty, int preparationTime, int servings, long preparationsByUsers, User user) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.difficulty = difficulty;
         this.preparationTime = preparationTime;
         this.servings = servings;
-        this.likes = likes;
         this.preparationsByUsers = preparationsByUsers;
         this.user = user;
     }
@@ -151,12 +151,6 @@ public class Recipe {
     public void setRecipePreparations(Set<RecipePreparation> recipePreparations) {
         this.recipePreparations = recipePreparations;
     }
-    public long getLikes() {
-        return likes;
-    }
-    public void setLikes(long likes) {
-        this.likes = likes;
-    }
     public long getPreparationsByUsers() {
         return preparationsByUsers;
     }
@@ -169,12 +163,21 @@ public class Recipe {
     public void setAddingDate(Calendar addingDate) {
         this.addingDate = addingDate;
     }
-
-    public void addOneLike(){
-        likes++;
+    public double getAverageRate() {
+        return averageRate;
     }
-    public void removeOneLike(){
-        likes--;
+    public void setAverageRate(double averageRate) {
+        this.averageRate = averageRate;
+    }
+    public int getNumberOfRates() {
+        return numberOfRates;
+    }
+    public void setNumberOfRates(int numberOfRates) {
+        this.numberOfRates = numberOfRates;
+    }
+
+    public void incrementNumberOfRates(){
+        numberOfRates++;
     }
     public void addOnePreparation(){
         preparationsByUsers++;
@@ -182,4 +185,5 @@ public class Recipe {
     public void removeOnePreparation(){
         preparationsByUsers--;
     }
+
 }

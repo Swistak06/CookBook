@@ -9,6 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <title>CookBook</title>
 
     <!-- Bootstrap core CSS -->
@@ -67,15 +71,20 @@
 </nav>
 
 <div class="container">
-    <div class="row mt-1" th:object="${recipe}">
+    <div class="row mt-1" id="rowWithId" th:object="${recipe}" th:name="${recipe.id}">
         <h2 class="col-12 mt-5" th:text="*{name}"> </h2>
 
         <div class="row col-12 mt-1 mb-1 pl-0 pr-0 ml-0 mr-0">
             <div class="card col-3">
                 <div class="card-body">
-                    <h5 class="card-title mt-5" id="recipeLikesLabel" th:text="'Likes: ' + ${recipe.likes}"></h5>
+                    <h5 class="card-title mt-5" id="recipeLikesLabel" th:text="'Likes: '"></h5>
                     <h5 class="card-title" id="recipePreparationNumberLabel" th:text="'Made it: ' + ${recipe.preparationsByUsers}"></h5>
                     <h5 class="card-title" th:text="'Author: ' + ${recipe.getUser().getUsername()}"></h5>
+                    <button type="button" class="btn" id="rate1Btn">1</button>
+                    <button type="button" class="btn" id="rate2Btn">2</button>
+                    <button type="button" class="btn" id="rate3Btn">3</button>
+                    <button type="button" class="btn" id="rate4Btn">4</button>
+                    <button type="button" class="btn" id="rate5Btn">5</button>
                 </div>
             </div>
             <div class="col-6">
@@ -104,8 +113,7 @@
                     <h5 class="card-title mt-2" th:text="'Servings: ' + ${recipe.getServings()}"></h5>
                 </div>
             </div>
-
-            <div class="row mt-5 md-1 col-12 mr-0 pr-0 ml-0 pl-0" th:name="${recipe.id}">
+            <div class="row mt-5 md-1 col-12 mr-0 pr-0 ml-0 pl-0" >
                 <form class="col-4">
                     <button class="btn btn-primary col-12">Save</button>
                 </form>

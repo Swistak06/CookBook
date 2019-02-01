@@ -6,6 +6,7 @@ import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.dto.StepDto;
 import com.swistak.CookBook.model.*;
 import com.swistak.CookBook.repository.RecipePreparationRepository;
+import com.swistak.CookBook.repository.RecipeRateRepository;
 import com.swistak.CookBook.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Autowired
     RecipePreparationRepository recipePreparationRepository;
+
+    @Autowired
+    RecipeRateRepository recipeRateRepository;
 
     private DtoService dtoService;
 
@@ -81,7 +85,44 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    public void addOrChangeRecipeRate(Recipe recipe, User user, int rate) {
+        RecipeRate recipeRate = recipeRateRepository.findByRecipeAndUser(recipe,user);
+        if(recipeRate == null){
+            recipeRateRepository.save(new RecipeRate(rate,recipe,user));
+            addOneRecipeRate(recipe, rate);
+        }
+        else{
+            updateRecipeRate(recipe,recipeRate.getRate(),rate);
+            recipeRate.setRate(rate);
+            recipeRateRepository.save(recipeRate);
+        }
+    }
+
+    @Override
+    public RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user) {
+        return recipeRateRepository.findByRecipeAndUser(recipe,user);
+    }
+
+    @Override
     public List<Recipe> findNewestRecipes() {
         return recipeRepository.findTop4ByAddingDateIsNotNullOrderByAddingDateDesc();
     }
+
+
+    private void addOneRecipeRate(Recipe recipe, int rate){
+        double avg = recipe.getNumberOfRates() * recipe.getAverageRate();
+        avg += rate;
+        recipe.incrementNumberOfRates();
+        avg /= recipe.getNumberOfRates();
+        recipe.setAverageRate(avg);
+        recipeRepository.save(recipe);
+    }
+    private void updateRecipeRate(Recipe recipe,int oldRate, int newRate){
+        double avg = recipe.getNumberOfRates() * recipe.getAverageRate();
+        avg -= oldRate;
+        avg += newRate;
+        avg /= recipe.getNumberOfRates();
+        recipe.setAverageRate(avg);
+    }
+
 }

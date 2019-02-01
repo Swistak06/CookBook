@@ -15,7 +15,7 @@ public class RecipeRate {
     private long id;
 
     @Range(min=0, max=5)
-    private double rate;
+    private int rate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
@@ -27,7 +27,7 @@ public class RecipeRate {
 
     public RecipeRate() {
     }
-    public RecipeRate(@Range(min = 0, max = 5) double rate, Recipe recipe, User user) {
+    public RecipeRate(@Range(min = 0, max = 5) int rate, Recipe recipe, User user) {
         this.rate = rate;
         this.recipe = recipe;
         this.user = user;
@@ -38,10 +38,10 @@ public class RecipeRate {
     public void setId(long id) {
         this.id = id;
     }
-    public double getRate() {
+    public int getRate() {
         return rate;
     }
-    public void setRate(double rate) {
+    public void setRate(int rate) {
         this.rate = rate;
     }
     public Recipe getRecipe() {
