@@ -12,7 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.RoundingMode;
 import java.security.Principal;
+import java.text.DecimalFormat;
 
 @Controller
 public class RecipeController {
@@ -26,9 +28,12 @@ public class RecipeController {
     public String showRecipePage(@PathVariable("id") long id, Model model)
     {
         Recipe recipe = recipeService.findByID(id);
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
         if(recipe == null)
             return "redirect/";
         model.addAttribute("recipe", recipe);
+        model.addAttribute("avgRate", df.format(recipe.getAverageRate()));
         return "recipe-page";
     }
 

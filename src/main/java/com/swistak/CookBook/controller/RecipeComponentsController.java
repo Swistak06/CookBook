@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.RoundingMode;
 import java.security.Principal;
+import java.text.DecimalFormat;
 
 @Controller
 public class RecipeComponentsController {
@@ -32,13 +34,13 @@ public class RecipeComponentsController {
 
     @PostMapping("/api/rateRecipe/recipe{id}")
     @ResponseBody
-    public int getRecipeRate(@PathVariable("id") long id, Principal principal,@RequestParam("rateVal") int rateVal){
-        System.out.println(rateVal);
+    public String getRecipeRate(@PathVariable("id") long id, Principal principal,@RequestParam("rateVal") int rateVal){
         User user = userService.findByUsername(principal.getName());
         Recipe recipe = recipeService.findByID(id);
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
         recipeService.addOrChangeRecipeRate(recipe,user,rateVal);
-
-        return rateVal;
+        return df.format(recipe.getAverageRate());
     }
 
     @GetMapping("/api/getRecipeRateFromUser/recipe{id}")

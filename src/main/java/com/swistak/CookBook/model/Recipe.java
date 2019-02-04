@@ -49,6 +49,9 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecipePreparation> recipePreparations = new HashSet<>();
 
+    @OneToMany(mappedBy = "commentedRecipe", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<RecipeComment> recipeComments = new ArrayList<>();
+
     public Recipe() {
     }
 

@@ -41,12 +41,11 @@ function rateRecipeAjaxCall(button){
     var id = $(button).parent().parent().parent().parent().attr('name');
     var urlString = '/api/rateRecipe/recipe'+id+'?rateVal=';
     var rateVal = rateButtonArray.indexOf(button)+1;
-    console.log("dziala?");
     $.ajax({
         type: "post",
         url: urlString+rateVal,
-        success:function (){
-            console.log("elo, elo");
+        success:function (data){
+            $("#recipeRateLabel").text("Rate: " + data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert(xhr.status);
