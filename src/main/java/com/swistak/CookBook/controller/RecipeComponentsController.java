@@ -1,6 +1,8 @@
 package com.swistak.CookBook.controller;
 
+import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.model.Recipe;
+import com.swistak.CookBook.model.RecipeComment;
 import com.swistak.CookBook.model.RecipeRate;
 import com.swistak.CookBook.model.User;
 import com.swistak.CookBook.service.RecipeService;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.stream.events.Comment;
 import java.math.RoundingMode;
 import java.security.Principal;
 import java.text.DecimalFormat;
@@ -53,5 +56,12 @@ public class RecipeComponentsController {
             return 0;
         else
             return recipeRate.getRate();
+    }
+
+    @PostMapping("/api/addComment")
+    public String addCommentToRecipe(@ModelAttribute("recipeComment") RecipeComment recipeComment ){
+        if(!recipeComment.getCommentText().equals(""))
+            recipeService.addCommentToRecipe(recipeComment);
+        return "redirect:/recipe/" + recipeComment.getCommentedRecipe().getId();
     }
 }

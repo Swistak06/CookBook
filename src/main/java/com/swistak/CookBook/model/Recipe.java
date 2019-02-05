@@ -178,6 +178,12 @@ public class Recipe {
     public void setNumberOfRates(int numberOfRates) {
         this.numberOfRates = numberOfRates;
     }
+    public List<RecipeComment> getRecipeComments() {
+        return recipeComments;
+    }
+    public void setRecipeComments(List<RecipeComment> recipeComments) {
+        this.recipeComments = recipeComments;
+    }
 
     public void incrementNumberOfRates(){
         numberOfRates++;

@@ -19,15 +19,20 @@ public class RecipeComment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User commentingUser;
+    private User commentingUser;
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
-    Recipe commentedRecipe;
+    private Recipe commentedRecipe;
 
     private Calendar commentDate = this.commentDate = Calendar.getInstance();
 
     public RecipeComment() {
+    }
+
+    public  RecipeComment(User commentingUser, Recipe commentedRecipe){
+        this.commentingUser = commentingUser;
+        this.commentedRecipe = commentedRecipe;
     }
 
     public RecipeComment(@NotBlank String commentText, User commentingUser, Recipe commentedRecipe) {

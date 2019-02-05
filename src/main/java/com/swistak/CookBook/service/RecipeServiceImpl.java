@@ -5,6 +5,7 @@ import com.swistak.CookBook.dto.IngredientDto;
 import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.dto.StepDto;
 import com.swistak.CookBook.model.*;
+import com.swistak.CookBook.repository.RecipeCommentRepository;
 import com.swistak.CookBook.repository.RecipePreparationRepository;
 import com.swistak.CookBook.repository.RecipeRateRepository;
 import com.swistak.CookBook.repository.RecipeRepository;
@@ -25,6 +26,9 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Autowired
     RecipeRateRepository recipeRateRepository;
+
+    @Autowired
+    RecipeCommentRepository recipeCommentRepository;
 
     private DtoService dtoService;
 
@@ -108,6 +112,10 @@ public class RecipeServiceImpl implements RecipeService{
         return recipeRepository.findTop4ByAddingDateIsNotNullOrderByAddingDateDesc();
     }
 
+    @Override
+    public RecipeComment addCommentToRecipe(RecipeComment recipeComment) {
+        return recipeCommentRepository.save(recipeComment);
+    }
 
     private void addOneRecipeRate(Recipe recipe, int rate){
         double avg = recipe.getNumberOfRates() * recipe.getAverageRate();

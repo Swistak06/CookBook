@@ -148,20 +148,23 @@
                 </tbody>
             </table>
         </div>
-        <div class="form-group col-6 mb-1">
+        <form class="form-group col-6 mb-1" method="post" th:action="@{/api/addComment}" th:object="${recipeComment}">
             <h2>Comment</h2>
-            <textarea class="form-control mb-1" rows="5" id="commentInput" placeholder="Your comment..."></textarea>
+            <textarea class="form-control mb-1" rows="5" id="commentInput" placeholder="Your comment..." th:field="*{commentText}"></textarea>
             <button class="btn btn-success" type="submit">Add comment</button>
-        </div>
+            <input type="hidden" id="commentId" name="custId" th:value="*{id}" th:field="*{id}">
+            <input type="hidden" id="commentUser" name="commentUser" th:value="*{commentUser}" th:field="*{commentUser}">
+            <input type="hidden" id="commentRecipe" name="commentRecipe" th:value="*{commentedRecipe}" th:field="*{commentedRecipe}">
+        </form>
         <div class="col-6">
             <h2>Comments </h2>
             <table class="table">
                 <tbody id="commentTable">
                 <tr>
                     <td style="width: 25%">
-                        <div class="card">
-                            <div class="card-header">Author</div>
-                            <div class="card-body">Body</div>
+                        <div class="card" th:each="recipeCom : *{recipeComments}">
+                            <div class="card-header" th:text="'Author:  ' + ${recipeCom.commentUser.username}"></div>
+                            <div class="card-body" th:text="${recipeCom.commentText}">Body</div>
                         </div>
                     </td>
                 </tr>
