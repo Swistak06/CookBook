@@ -50,6 +50,8 @@ public class RecipeComponentsController {
     @ResponseBody
     public int getRecipeRateFromUser(@PathVariable("id") long id, Principal principal){
         Recipe recipe = recipeService.findByID(id);
+        if(principal == null)
+            return 0;
         User user = userService.findByUsername(principal.getName());
         RecipeRate recipeRate = recipeService.findRecipeRateByRecipeAndUser(recipe,user);
         if(recipeRate == null)

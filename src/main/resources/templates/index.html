@@ -63,28 +63,30 @@
     <div class="row mt-3">
         <h1 class="col-12">Newest recipes</h1>
         <div class="card-group mt-3 col-12">
-            <div th:each="newRecipe : ${newestRec}" class="card">
+            <div th:each="newRecipe : ${newestRec}" class="card col-3">
                 <div class="card-body">
                     <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${newRecipe.id})}" th:text="${newRecipe.name}" class="card-link"></a></h5>
-                    <p class="card-text " th:text="*{newRecipe.category}">Category</p>
+                    <p class="card-text " th:text="'Difficulty: '+ ${newRecipe.difficulty}"></p>
+                    <a th:href="@{/recipe/{id}(id=${newRecipe.id})}"><img class="card-img-top" th:src="${newRecipe.getImages().get(0).getUrl()}" width="200" height="200" ></a>
                 </div>
                 <div class="card-footer">
-                    <h5 class="text-center text-primary" th:text="${newRecipe.difficulty}">Difficulty</h5>
+                    <h5 class="text-center text-primary" ><a th:href="@{/recipe/{id}(id=${newRecipe.id})}" th:text="'Category: ' + *{newRecipe.category}" class="card-link "></a></h5>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row mt-3">
-        <h1 class="col-12">Most popular</h1>
+        <h1 class="col-12">Newest recipes</h1>
         <div class="card-group mt-3 col-12">
-            <div th:each="newRecipe : ${newestRec}" class="card">
+            <div th:each="popRecipe : ${popularRecipes}" class="card col-3">
                 <div class="card-body">
-                    <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${newRecipe.id})}" th:text="${newRecipe.name}" class="card-link"></a></h5>
-                    <p class="card-text " th:text="*{newRecipe.category}">Category</p>
+                    <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${popRecipe.id})}" th:text="${popRecipe.name}" class="card-link"></a></h5>
+                    <p class="card-text " th:text="'Difficulty: '+ ${popRecipe.difficulty}"></p>
+                    <a th:href="@{/recipe/{id}(id=${popRecipe.id})}"><img class="card-img-top" th:src="${popRecipe.getImages().get(0).getUrl()}" width="200" height="200" ></a>
                 </div>
                 <div class="card-footer">
-                    <h5 class="text-center text-primary" th:text="${newRecipe.difficulty}">Difficulty</h5>
+                    <h5 class="text-center text-primary" ><a th:href="@{/recipe/{id}(id=${popRecipe.id})}" th:text="'Rate: ' + *{popRecipe.averageRate}" class="card-link "></a></h5>
                 </div>
             </div>
         </div>

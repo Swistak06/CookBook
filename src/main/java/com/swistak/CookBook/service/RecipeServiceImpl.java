@@ -50,7 +50,7 @@ public class RecipeServiceImpl implements RecipeService{
 
         List<StepDto> stepDtoList = dtoService.convertJsonStepList(recipeDto.getJsonStepsList());
         for (StepDto step : stepDtoList) {
-            recipe.getSteps().add(new Step(step.getValue(),recipe));
+            recipe.getSteps().add(new Step(step.getValue(),stepDtoList.indexOf(step)+1,recipe));
         }
 
         List<ImageDto> imageDtoList = dtoService.convertJsonImageList(recipeDto.getJsonImagesList());
@@ -110,6 +110,11 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public List<Recipe> findNewestRecipes() {
         return recipeRepository.findTop4ByAddingDateIsNotNullOrderByAddingDateDesc();
+    }
+
+    @Override
+    public List<Recipe> findBestRatedRecipes() {
+        return recipeRepository.findTop4ByAverageRateIsNotNullOrderByAverageRateDesc();
     }
 
     @Override

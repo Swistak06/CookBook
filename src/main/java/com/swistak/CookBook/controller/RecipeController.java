@@ -29,14 +29,20 @@ public class RecipeController {
     public String showRecipePage(@PathVariable("id") long id, Model model, Principal principal)
     {
         Recipe recipe = recipeService.findByID(id);
+        RecipeComment recipeComment;
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
-        RecipeComment recipeComment = new RecipeComment(userService.findByUsername(principal.getName()), recipe);
+        if(principal != null){
+            recipeComment = new RecipeComment(userService.findByUsername(principal.getName()), recipe);
+        }
+        else
+            recipeComment = new RecipeComment();
+        model.addAttribute("recipeComment", recipeComment);
         if(recipe == null)
             return "redirect/";
         model.addAttribute("recipe", recipe);
         model.addAttribute("avgRate", df.format(recipe.getAverageRate()));
-        model.addAttribute("recipeComment", recipeComment);
+
         return "recipe-page";
     }
 

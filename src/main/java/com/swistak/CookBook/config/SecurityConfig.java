@@ -31,18 +31,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    private static final String[] PUBLIC_MATCHERS = {
+    private static final String[] PUBLIC_MATCHES = {
             "/",
-
-    };
-
-    private static final String[] LOGGED_MATCHERS = {
-            "/addRecipe",
             "/recipe/*"
-
     };
 
-    private static final String[] ADMIN_MATCHERS = {
+    private static final String[] LOGGED_MATCHES = {
+            "/addRecipe",
+    };
+
+    private static final String[] ADMIN_MATCHES = {
             "/admin/**"
     };
 
@@ -50,9 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers(ADMIN_MATCHERS).hasRole("ADMIN")
-                    .antMatchers(LOGGED_MATCHERS).hasAnyRole("ADMIN", "USER")
-                    .antMatchers(PUBLIC_MATCHERS).permitAll()
+                    .antMatchers(ADMIN_MATCHES).hasRole("ADMIN")
+                    .antMatchers(LOGGED_MATCHES).hasAnyRole("ADMIN", "USER")
+                    .antMatchers(PUBLIC_MATCHES).permitAll()
                     .and()
                 .formLogin()
                     .loginPage("/signIn")

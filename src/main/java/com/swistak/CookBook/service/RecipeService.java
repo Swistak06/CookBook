@@ -16,5 +16,6 @@ public interface RecipeService {
     void addOrChangeRecipeRate(Recipe recipe, User user, int rate);
     RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user);
     List<Recipe> findNewestRecipes();
+    List<Recipe> findBestRatedRecipes();
     RecipeComment addCommentToRecipe(RecipeComment recipeComment);
 }
