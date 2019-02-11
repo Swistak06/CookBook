@@ -2,12 +2,12 @@ package com.swistak.CookBook.model;
 
 import javax.persistence.*;
 
-@Entity(name = "RecipePreparations")
+@Entity(name = "recipe_preparations")
 public class RecipePreparation {
 
     @Id
     @GeneratedValue
-    @Column(name = "RecipePreparation_id")
+    @Column(name = "recipe_preparation_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

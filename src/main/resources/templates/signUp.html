@@ -51,7 +51,7 @@
 </nav>
 <div class="container">
     <div class="offset-2 col-8 mt-2">
-        <form th:method="post" th:object="${newUser}" th:action="@{/signUpUser}" class="card">
+        <form th:method="post" th:object="${newUser}" th:action="@{/signUpUser}" class="card" id="signUpForm">
             <div class="card-body">
                 <label class="mt-2"  for="username">Username</label>
                 <input type="text" class="form-control" id="username" required placeholder="Username" th:field="*{username}">
@@ -59,16 +59,18 @@
                 <input type="password" class="form-control" id="password" required placeholder="Password" th:field="*{password}">
                 <label class="mt-2"  for="confirmPassword">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" required placeholder="Confirm Password">
-                <label for="e-mail" class="mt-2">e-mail</label>
+                <label for="e-mail" class="mt-2">Email</label>
                 <input type="email" class="form-control" id="e-mail" required placeholder="e-mail" th:field="*{email}">
-                <button type="submit" class="btn btn-primary mt-1">Register</button>
+                <button type="submit" class="btn btn-primary mt-1" id="signUpButton">Register</button>
             </div>
         </form>
     </div>
+    <button class="btn" type="button" id="someButton">Aloha!</button>
 </div>
 
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="/js/sign-up-validate.js"></script>
 <script src="/webjars/popper.js/1.14.1/popper.js"></script>
 </body>
 </html>

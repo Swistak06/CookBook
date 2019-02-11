@@ -59,7 +59,40 @@
         </div>
     </div>
 </nav>
+<div class="container">
+    <div class="row mt-3">
+        <h1 class="col-12">Newest recipes</h1>
+        <div class="card-group mt-3 col-12">
+            <div th:each="newRecipe : ${newestRec}" class="card col-3">
+                <div class="card-body">
+                    <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${newRecipe.id})}" th:text="${newRecipe.name}" class="card-link"></a></h5>
+                    <p class="card-text " th:text="'Difficulty: '+ ${newRecipe.difficulty}"></p>
+                    <a th:href="@{/recipe/{id}(id=${newRecipe.id})}"><img class="card-img-top" th:src="${newRecipe.getImages().get(0).getUrl()}" width="200" height="200" ></a>
+                </div>
+                <div class="card-footer">
+                    <h5 class="text-center text-primary" ><a th:href="@{/recipe/{id}(id=${newRecipe.id})}" th:text="'Category: ' + *{newRecipe.category}" class="card-link "></a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row mt-3">
+        <h1 class="col-12">Best rated recipes</h1>
+        <div class="card-group mt-3 col-12">
+            <div th:each="bestRecipes : ${bestRated}" class="card col-3">
+                <div class="card-body">
+                    <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${bestRecipes.id})}" th:text="${bestRecipes.name}" class="card-link"></a></h5>
+                    <p class="card-text " th:text="'Difficulty: '+ ${bestRecipes.difficulty}"></p>
+                    <a th:href="@{/recipe/{id}(id=${bestRecipes.id})}"><img class="card-img-top" th:src="${bestRecipes.getImages().get(0).getUrl()}" width="200" height="200" ></a>
+                </div>
+                <div class="card-footer">
+                    <span class="glyphicon glyphicon-star"></span>
+                    <h5 class="text-center text-primary" ><a th:href="@{/recipe/{id}(id=${bestRecipes.id})}" th:text="'Rate: ' + *{bestRecipes.averageRate}" class="card-link "></a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>

@@ -2,7 +2,7 @@ package com.swistak.CookBook.controller;
 
 import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.model.Recipe;
-import com.swistak.CookBook.model.RecipeLike;
+import com.swistak.CookBook.model.RecipeComment;
 import com.swistak.CookBook.model.User;
 import com.swistak.CookBook.service.RecipeService;
 import com.swistak.CookBook.service.UserService;
@@ -13,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.RoundingMode;
 import java.security.Principal;
+import java.text.DecimalFormat;
 
 @Controller
 public class RecipeController {
@@ -24,12 +26,23 @@ public class RecipeController {
     UserService userService;
 
     @GetMapping("/recipe/{id}")
-    public String showRecipePage(@PathVariable("id") long id, Model model)
+    public String showRecipePage(@PathVariable("id") long id, Model model, Principal principal)
     {
         Recipe recipe = recipeService.findByID(id);
+        RecipeComment recipeComment;
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        if(principal != null){
+            recipeComment = new RecipeComment(userService.findByUsername(principal.getName()), recipe);
+        }
+        else
+            recipeComment = new RecipeComment();
+        model.addAttribute("recipeComment", recipeComment);
         if(recipe == null)
             return "redirect/";
         model.addAttribute("recipe", recipe);
+        model.addAttribute("avgRate", df.format(recipe.getAverageRate()));
+
         return "recipe-page";
     }
 
@@ -46,14 +59,6 @@ public class RecipeController {
         return "redirect:/";
     }
 
-    @PostMapping("/likeRecipe/{id}")
-    public String addLikeToRecipe(@PathVariable("id") long id, Principal principal, @RequestHeader("Referer") String referer){
-        User user = userService.findByUsername(principal.getName());
-        Recipe recipe = recipeService.findByID(id);
-        recipeService.addOrRemoveLikeFromRecipe(recipe,user);
-        return "redirect:" + referer;
-    }
-
     @PostMapping("/prepareRecipe/{id}")
     public String addPreparationToRecipe(@PathVariable("id") long id, Principal principal, @RequestHeader("Referer") String referer){
         User user = userService.findByUsername(principal.getName());
@@ -61,6 +66,4 @@ public class RecipeController {
         recipeService.addOrRemovePrepFromRecipe(recipe,user);
         return "redirect:" + referer;
     }
-
-
 }
