@@ -20,7 +20,7 @@ public class HomeController {
         List<Recipe> newestRecipes = recipeService.findNewestRecipes();
         List<Recipe> mostPopularRecipes = recipeService.findBestRatedRecipes();
         model.addAttribute("newestRec",newestRecipes);
-        model.addAttribute("popularRecipes",mostPopularRecipes);
+        model.addAttribute("bestRated",mostPopularRecipes);
         return "index";
     }
 }

@@ -83,11 +83,11 @@
                     <h5 class="card-title mt-2" id="recipeRateLabel" th:text="'Rate: ' + ${avgRate}"></h5>
                     <h5 class="card-title" id="recipePreparationNumberLabel" th:text="'Made it: ' + ${recipe.preparationsByUsers}"></h5>
                     <h5 class="card-title" th:text="'Author: ' + ${recipe.getUser().getUsername()}"></h5>
-                    <button type="button" class="btn" id="rate1Btn" sec:authorize="isAuthenticated()">1</button>
-                    <button type="button" class="btn" id="rate2Btn" sec:authorize="isAuthenticated()">2</button>
-                    <button type="button" class="btn" id="rate3Btn" sec:authorize="isAuthenticated()">3</button>
-                    <button type="button" class="btn" id="rate4Btn" sec:authorize="isAuthenticated()">4</button>
-                    <button type="button" class="btn" id="rate5Btn" sec:authorize="isAuthenticated()">5</button>
+                    <input type="image" src="/icons/star1.png" class="pl-0 ml-0" id="rate1Btn" sec:authorize="isAuthenticated()" />
+                    <input type="image" src="/icons/star1.png" id="rate2Btn" sec:authorize="isAuthenticated()" />
+                    <input type="image" src="/icons/star1.png" id="rate3Btn" sec:authorize="isAuthenticated()" />
+                    <input type="image" src="/icons/star1.png" id="rate4Btn" sec:authorize="isAuthenticated()" />
+                    <input type="image" src="/icons/star1.png" id="rate5Btn" sec:authorize="isAuthenticated()" />
                 </div>
             </div>
             <div class="col-6">

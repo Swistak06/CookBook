@@ -6,35 +6,38 @@ $(function () {
     });
 });
 var rateButtonArray = ["#rate1Btn","#rate2Btn","#rate3Btn","#rate4Btn","#rate5Btn"];
-var rateButtonsColors = [];
+var rateButtonsModes = [];
 for(var i = 0; i<5; i++){
-    rateButtonsColors.push($(rateButtonArray[i]).css("background-color"));
+    if($(rateButtonArray[i]).attr("src") == "/icons/star1.png")
+        rateButtonsModes.push("/icons/star1.png");
+    else
+        rateButtonsModes.push("/icons/star2.png");
 }
 
 
 function hoverIn(button){
     for(var i = 0; i<rateButtonArray.indexOf(button)+1; i++){
-        $(rateButtonArray[i]).css("background-color","red");
+        $(rateButtonArray[i]).attr("src","/icons/star2.png");
     }
     for(var j = rateButtonArray.indexOf(button)+1; j <rateButtonArray.length;j++){
-        $(rateButtonArray[j]).css("background-color","#dddddd");
+        $(rateButtonArray[j]).attr("src","/icons/star1.png");
     }
 }
 function hoverOut(button){
     for(var i = 0; i<rateButtonArray.indexOf(button)+1; i++){
-        $(rateButtonArray[i]).css("background-color",rateButtonsColors[i]);
+        $(rateButtonArray[i]).attr("src",rateButtonsModes[i]);
     }
     for(var j = rateButtonArray.indexOf(button)+1; j <rateButtonArray.length;j++){
-        $(rateButtonArray[j]).css("background-color",rateButtonsColors[j]);
+        $(rateButtonArray[j]).attr("src",rateButtonsModes[j]);
     }
 }
 function rateButtonClick(button){
     for(var i = 0; i<rateButtonArray.indexOf(button)+1; i++){
-        rateButtonsColors[i] = "red";
+        rateButtonsModes[i] = "/icons/star2.png";
     }
     for(var j = rateButtonArray.indexOf(button)+1; j <rateButtonArray.length;j++){
-        rateButtonsColors[j] = "#dddddd";
-        $(rateButtonArray[j]).css("background-color",rateButtonsColors[j]);
+        rateButtonsModes[j] = "/icons/star1.png";
+        $(rateButtonArray[j]).attr("src",rateButtonsModes[j]);
     }
 }
 function rateRecipeAjaxCall(button){
@@ -62,8 +65,8 @@ $(document).ready(function(){
         url:urlString,
         success:function(data){
             for(var i = 0;i<data;i++){
-                $(rateButtonArray[i]).css("background-color","red");
-                rateButtonsColors[i] = "red";
+                $(rateButtonArray[i]).attr("src","/icons/star2.png");
+                rateButtonsModes[i] = "/icons/star2.png";
             }
         }
     })
