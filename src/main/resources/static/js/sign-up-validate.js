@@ -26,19 +26,16 @@ $("#signUpForm").submit(function(){
 
 function checkUsername(username){
     var regex = new RegExp("[a-zA-Z0-9]{4,50}$");
-    console.log("username:" + regex.test(username) );
     return regex.test(username)
 }
 
 function checkEmail(email){
     var regex = new RegExp("^.+\@.+\\..+$");
-    console.log("email: "+ regex.test(email));
     return regex.test(email);
 }
 
 function checkPassword(password){
     var regex = new RegExp("[a-zA-Z0-9]{6,50}$");
-    console.log("password:" + regex.test(password) );
     return regex.test(password)
 }
 
@@ -60,7 +57,6 @@ function checkIfUsernameIsUsed(username){
             flag = data;
         }
     });
-    console.log(flag);
     return flag;
 }
 
