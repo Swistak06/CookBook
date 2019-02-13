@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Add Recipe</title>
+    <title>Sign up</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
@@ -53,6 +53,9 @@
     <div class="offset-2 col-8 mt-2">
         <form th:method="post" th:object="${newUser}" th:action="@{/signUpUser}" class="card" id="signUpForm">
             <div class="card-body">
+                <div th:if="${param.err != null}" class="alert alert-danger" role="alert">
+                    Error occurred. Please try again.
+                </div>
                 <label class="mt-2"  for="username">Username</label>
                 <input type="text" class="form-control" id="username" required placeholder="Username" th:field="*{username}">
                 <label class="mt-2"  for="password">Password</label>
