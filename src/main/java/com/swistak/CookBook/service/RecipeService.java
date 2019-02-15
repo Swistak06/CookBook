@@ -17,5 +17,6 @@ public interface RecipeService {
     RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user);
     List<Recipe> findNewestRecipes();
     List<Recipe> findBestRatedRecipes();
+    List<Recipe> findRecipesByCategory(String category);
     RecipeComment addCommentToRecipe(RecipeComment recipeComment);
 }

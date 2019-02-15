@@ -13,8 +13,7 @@ import java.util.List;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe,Long>{
      Recipe findById(long id);
-
-     @Query("select r from Recipe r order by r.addingDate desc")
+     
      List<Recipe> findTop4ByAddingDateIsNotNullOrderByAddingDateDesc();
      List<Recipe> findTop4ByAverageRateIsNotNullOrderByAverageRateDesc();
 }

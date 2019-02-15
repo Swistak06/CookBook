@@ -14,7 +14,6 @@ for(var i = 0; i<5; i++){
         rateButtonsModes.push("/icons/star2.png");
 }
 
-
 function hoverIn(button){
     for(var i = 0; i<rateButtonArray.indexOf(button)+1; i++){
         $(rateButtonArray[i]).attr("src","/icons/star2.png");

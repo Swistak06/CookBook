@@ -118,6 +118,11 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    public List<Recipe> findRecipesByCategory(String category) {
+        return recipeRepository.findByCategoryOrderByAverageRateDesc(category);
+    }
+
+    @Override
     public RecipeComment addCommentToRecipe(RecipeComment recipeComment) {
         return recipeCommentRepository.save(recipeComment);
     }
