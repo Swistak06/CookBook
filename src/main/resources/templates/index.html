@@ -27,28 +27,27 @@
                         Categories
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Main Dishes</a>
-                        <a class="dropdown-item" href="#">Soups</a>
-                        <a class="dropdown-item" href="#">Salads</a>
-                        <a class="dropdown-item" href="#">Cakes</a>
-                        <a class="dropdown-item" href="#">Desserts</a>
-                        <a class="dropdown-item" href="#">Other</a>
+                        <a class="dropdown-item" href="/recipes/maindish/1">Main Dishes</a>
+                        <a class="dropdown-item" href="/recipes/soup/1">Soups</a>
+                        <a class="dropdown-item" href="/recipes/salad/1">Salads</a>
+                        <a class="dropdown-item" href="/recipes/cake/1">Cakes</a>
+                        <a class="dropdown-item" href="/recipes/desserts/1">Desserts</a>
+                        <a class="dropdown-item" href="/recipes/other/1">Other</a>
                     </div>
                 </div>
             </div>
             <div class="navbar-nav mr-auto col-7">
-                <form class="input-group" th:action="@{/searchRecipe}" method="POST">
+                <form class="input-group" th:action="@{/searchRecipe/page=1}" method="get">
                     <input style="width: 50%" type="text" class="form-control" placeholder="" aria-label=""
                            aria-describedby="basic-addon1" name="searchedRecipeName">
                     <select class="custom-select" id="inputGroupSelect01" name="searchedCategory">
                         <option selected value="All">All Categories</option>
                         <option value="Main dish">Main dish</option>
-                        <option value="Soups">Soups</option>
-                        <option value="Salads">Salads</option>
-                        <option value="Cakes">Cakes</option>
-                        <option value="Desserts">Desserts</option>
-                        <option value="Others">Others</option>
-
+                        <option value="Soup">Soups</option>
+                        <option value="Salad">Salads</option>
+                        <option value="Cake">Cakes</option>
+                        <option value="Dessert">Desserts</option>
+                        <option value="Other">Others</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-primary text-light" type="submit">Search</button>

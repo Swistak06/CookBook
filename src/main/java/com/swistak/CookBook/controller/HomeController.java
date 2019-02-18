@@ -19,6 +19,7 @@ public class HomeController {
     public String showHomePage(Model model){
         List<Recipe> newestRecipes = recipeService.findNewestRecipes();
         List<Recipe> mostPopularRecipes = recipeService.findBestRatedRecipes();
+
         model.addAttribute("newestRec",newestRecipes);
         model.addAttribute("bestRated",mostPopularRecipes);
         return "index";

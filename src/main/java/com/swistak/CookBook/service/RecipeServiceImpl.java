@@ -12,28 +12,30 @@ import com.swistak.CookBook.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Service
 public class RecipeServiceImpl implements RecipeService{
 
-    @Autowired
-    RecipeRepository recipeRepository;
-
-    @Autowired
-    RecipePreparationRepository recipePreparationRepository;
-
-    @Autowired
-    RecipeRateRepository recipeRateRepository;
-
-    @Autowired
-    RecipeCommentRepository recipeCommentRepository;
+    private RecipeRepository recipeRepository;
+    private RecipePreparationRepository recipePreparationRepository;
+    private RecipeRateRepository recipeRateRepository;
+    private RecipeCommentRepository recipeCommentRepository;
+    private EntityManager entityManager;
 
     private DtoService dtoService;
 
-    public RecipeServiceImpl(DtoService dtoService) {
+    @Autowired
+    public RecipeServiceImpl(DtoService dtoService, RecipeRepository recipeRepository, RecipePreparationRepository recipePreparationRepository, RecipeRateRepository recipeRateRepository, RecipeCommentRepository recipeCommentRepository, EntityManager entityManager) {
         this.dtoService = dtoService;
+        this.recipeRepository = recipeRepository;
+        this.recipePreparationRepository = recipePreparationRepository;
+        this.recipeRateRepository = recipeRateRepository;
+        this.recipeCommentRepository = recipeCommentRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -118,8 +120,33 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public List<Recipe> findRecipesByCategory(String category) {
-        return recipeRepository.findByCategoryOrderByAverageRateDesc(category);
+    public List<Recipe> getRecipesFromCategoryInRange(String category, int start, int stop) {
+        String sql = "Select r from Recipe r where r.category like :category order by r.averageRate desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).setParameter("category",category).getResultList());
+
+        return result;
+    }
+
+    @Override
+    public List<Recipe> getRecipesByNameFromCategoryInRange(String recipeName, String category, int start, int stop) {
+        String sql = "Select r from Recipe r where r.category like :category and r.name like CONCAT('%',:recipeName,'%') order by r.id desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).setParameter("category",category).setParameter("recipeName",recipeName).getResultList());
+
+        return result;
+    }
+
+    @Override
+    public List<Recipe> getRecipesByNameInRange(String recipeName, int start, int stop) {
+        String sql = "Select r from Recipe r where r.name like CONCAT('%',:recipeName,'%') order by r.id desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).setParameter("recipeName",recipeName).getResultList());
+
+        return result;
     }
 
     @Override
