@@ -1,8 +1,8 @@
 package com.swistak.CookBook.model;
 
 import javax.persistence.*;
-
-@Entity(name = "recipe_preparations")
+@Entity
+@Table(name = "recipe_preparations")
 public class RecipePreparation {
 
     @Id

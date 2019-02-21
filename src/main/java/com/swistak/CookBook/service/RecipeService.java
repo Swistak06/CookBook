@@ -17,8 +17,10 @@ public interface RecipeService {
     RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user);
     List<Recipe> findNewestRecipes();
     List<Recipe> findBestRatedRecipes();
-    List<Recipe> getRecipesFromCategoryInRange(String category, int start, int stop);
-    List<Recipe> getRecipesByNameFromCategoryInRange(String recipeName, String category, int start, int stop);
-    List<Recipe> getRecipesByNameInRange(String recipeName, int start, int stop);
+    List<Recipe> getRecipesFromCategoryInRange(String category, int start, int numberOfResults);
+    List<Recipe> getRecipesByNameFromCategoryInRange(String recipeName, String category, int start, int numberOfResults);
+    List<Recipe> getRecipesByNameInRange(String recipeName, int start, int numberOfResults);
+    List<Recipe> getRecipesInRange(int start, int numberOfResults);
+    List<Recipe> getSavedRecipesByUserFromCategoryInRange(String username, String category, int start, int numberOfResults);
     RecipeComment addCommentToRecipe(RecipeComment recipeComment);
 }

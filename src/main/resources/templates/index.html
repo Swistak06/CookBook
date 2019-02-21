@@ -31,7 +31,7 @@
                         <a class="dropdown-item" href="/recipes/soup/1">Soups</a>
                         <a class="dropdown-item" href="/recipes/salad/1">Salads</a>
                         <a class="dropdown-item" href="/recipes/cake/1">Cakes</a>
-                        <a class="dropdown-item" href="/recipes/desserts/1">Desserts</a>
+                        <a class="dropdown-item" href="/recipes/dessert/1">Desserts</a>
                         <a class="dropdown-item" href="/recipes/other/1">Other</a>
                     </div>
                 </div>
@@ -61,8 +61,8 @@
                         My Account
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">My CookBook</a>
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" th:href="@{/profile/myCookBook/all/1}">My CookBook</a>
+                        <a class="dropdown-item" href="#">Profile settings</a>
                         <a class="dropdown-item" th:href="@{/addRecipe}">Add recipe</a>
                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                     </div>
@@ -90,7 +90,7 @@
 
     <div class="row mt-3">
         <h1 class="col-12">Best rated recipes</h1>
-        <div class="card-group mt-3 col-12">
+        <div class="card-group mt-3 col-12 mb-3">
             <div th:each="bestRecipes : ${bestRated}" class="card col-3">
                 <div class="card-body">
                     <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${bestRecipes.id})}" th:text="${bestRecipes.name}" class="card-link"></a></h5>

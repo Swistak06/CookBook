@@ -2,7 +2,8 @@ package com.swistak.CookBook.model;
 
 import javax.persistence.*;
 
-@Entity(name = "images")
+@Entity
+@Table(name = "images")
 public class Image {
 
     @Id

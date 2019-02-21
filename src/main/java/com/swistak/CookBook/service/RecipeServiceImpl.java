@@ -25,17 +25,19 @@ public class RecipeServiceImpl implements RecipeService{
     private RecipeRateRepository recipeRateRepository;
     private RecipeCommentRepository recipeCommentRepository;
     private EntityManager entityManager;
+    private UserService userService;
 
     private DtoService dtoService;
 
     @Autowired
-    public RecipeServiceImpl(DtoService dtoService, RecipeRepository recipeRepository, RecipePreparationRepository recipePreparationRepository, RecipeRateRepository recipeRateRepository, RecipeCommentRepository recipeCommentRepository, EntityManager entityManager) {
+    public RecipeServiceImpl(DtoService dtoService, RecipeRepository recipeRepository, RecipePreparationRepository recipePreparationRepository, RecipeRateRepository recipeRateRepository, RecipeCommentRepository recipeCommentRepository, EntityManager entityManager, UserService userService) {
         this.dtoService = dtoService;
         this.recipeRepository = recipeRepository;
         this.recipePreparationRepository = recipePreparationRepository;
         this.recipeRateRepository = recipeRateRepository;
         this.recipeCommentRepository = recipeCommentRepository;
         this.entityManager = entityManager;
+        this.userService = userService;
     }
 
     @Override
@@ -120,33 +122,74 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public List<Recipe> getRecipesFromCategoryInRange(String category, int start, int stop) {
+    public List<Recipe> getRecipesFromCategoryInRange(String category, int start, int numberOfResults) {
         String sql = "Select r from Recipe r where r.category like :category order by r.averageRate desc";
         List<Recipe> result = new ArrayList<>();
 
-        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).setParameter("category",category).getResultList());
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("category",category).getResultList());
 
         return result;
     }
 
     @Override
-    public List<Recipe> getRecipesByNameFromCategoryInRange(String recipeName, String category, int start, int stop) {
+    public List<Recipe> getRecipesByNameFromCategoryInRange(String recipeName, String category, int start, int numberOfResults) {
         String sql = "Select r from Recipe r where r.category like :category and r.name like CONCAT('%',:recipeName,'%') order by r.id desc";
         List<Recipe> result = new ArrayList<>();
 
-        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).setParameter("category",category).setParameter("recipeName",recipeName).getResultList());
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("category",category).setParameter("recipeName",recipeName).getResultList());
 
         return result;
     }
 
     @Override
-    public List<Recipe> getRecipesByNameInRange(String recipeName, int start, int stop) {
+    public List<Recipe> getRecipesByNameInRange(String recipeName, int start, int numberOfResults) {
         String sql = "Select r from Recipe r where r.name like CONCAT('%',:recipeName,'%') order by r.id desc";
         List<Recipe> result = new ArrayList<>();
 
-        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(stop).setParameter("recipeName",recipeName).getResultList());
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("recipeName",recipeName).getResultList());
 
         return result;
+    }
+
+    @Override
+    public List<Recipe> getRecipesInRange(int start, int numberOfResults) {
+        String sql = "Select r from Recipe r order by r.id desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).getResultList());
+
+        return result;
+    }
+
+    @Override
+    public List<Recipe> getSavedRecipesByUserFromCategoryInRange(String  username, String category, int start, int numberOfResults) {
+        String sql;
+        List<RecipePreparation> result = new ArrayList<>();
+        List<Recipe> recipes = new ArrayList<>();
+        List<Recipe> rec = new ArrayList<>();
+        User user = userService.findByUsername(username);
+        sql = "Select rp from RecipePreparation rp where rp.user = :user order by rp.id desc";
+        if(category.equals("all")){
+            result.addAll(entityManager.createQuery(sql).setFirstResult(start-1).setMaxResults(numberOfResults).setParameter("user",user).getResultList());
+            for (RecipePreparation rp: result){
+                recipes.add(rp.getRecipe());
+            }
+        }
+        else{
+            result.addAll(entityManager.createQuery(sql).setParameter("user",user).getResultList());
+            for (RecipePreparation rp: result){
+                if(rp.getRecipe().getCategory().toLowerCase().equals(category))
+                    rec.add(rp.getRecipe());
+            }
+            if(!rec.isEmpty() && rec.size() >= start * 20)
+                for(int i = (start-1) * 20; i <start * 20;i++)
+                    recipes.add(rec.get(i));
+            else
+                for(int i = (start-1) * 20; i <rec.size(); i++)
+                    recipes.add(rec.get(i));
+        }
+
+        return recipes;
     }
 
     @Override

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Sign up</title>
+    <title>My CookBook</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
@@ -72,30 +72,36 @@
     </div>
 </nav>
 <div class="container">
-    <div class="offset-2 col-8 mt-2">
-        <form th:method="post" th:object="${newUser}" th:action="@{/signUpUser}" class="card" id="signUpForm">
-            <div class="card-body">
-                <div th:if="${param.err != null}" class="alert alert-danger" role="alert">
-                    Error occurred. Please try again.
-                </div>
-                <label class="mt-2"  for="username">Username</label>
-                <input type="text" class="form-control" id="username" required placeholder="Username" th:field="*{username}">
-                <label class="mt-2"  for="password">Password</label>
-                <input type="password" class="form-control" id="password" required placeholder="Password" th:field="*{password}">
-                <label class="mt-2"  for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" required placeholder="Confirm Password">
-                <label for="e-mail" class="mt-2">Email</label>
-                <input type="email" class="form-control" id="e-mail" required placeholder="e-mail" th:field="*{email}">
-                <button type="submit" class="btn btn-primary mt-1" id="signUpButton">Register</button>
-            </div>
-        </form>
+    <div class="row mt-3">
+        <a class="btn navbar-brand navbar-button-custom text-white offset-1 ml-2" th:href="@{/profile/myCookBook/all/1}">All recipes</a>
+        <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/profile/myCookBook/maindish/1}">Main Dishes</a>
+        <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/profile/myCookBook/soup/1}">Soups</a>
+        <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/profile/myCookBook/salad/1}">Salads</a>
+        <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/profile/myCookBook/cake/1}">Cakes</a>
+        <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/profile/myCookBook/dessert/1}">Desserts</a>
+        <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/profile/myCookBook/other/1}">Other</a>
     </div>
-    <button class="btn" type="button" id="someButton">Aloha!</button>
+    <div class="row-mt3 mb-2">
+        <h1 class="col-12" th:unless="${#lists.isEmpty(recipesFound)}" th:text="${chosenCategory}"></h1>
+        <h1 th:if="${#lists.isEmpty(recipesFound)}">No recipes saved from category.</h1>
+        <div class="card-group mt-3 col-12" th:unless="${recipesFound == null}" th:each="recipeGroup : ${recipesFound}">
+            <div th:each="recipe : ${recipeGroup}" th:unless="${recipe == null}" class="card col-3">
+                <div class="card-body">
+                    <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.name}" class="card-link"></a></h5>
+                    <p class="card-text " th:text="'Difficulty: '+ ${recipe.difficulty}"></p>
+                    <a th:href="@{/recipe/{id}(id=${recipe.id})}"><img class="card-img-top" th:src="${recipe.getImages().get(0).getUrl()}" width="200" height="200" ></a>
+                </div>
+                <div class="card-footer">
+                    <h5 class="text-center text-primary" ><a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="'Category: ' + *{recipe.category}" class="card-link "></a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script src="/js/sign-up-validate.js"></script>
 <script src="/webjars/popper.js/1.14.1/popper.js"></script>
 </body>
 </html>

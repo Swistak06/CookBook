@@ -189,4 +189,28 @@ public class User implements UserDetails{
     public void setRecipeRates(Set<RecipeRate> recipeRates) {
         this.recipeRates = recipeRates;
     }
+
+    public Set<RecipePreparation> getRecipeLikes() {
+        return recipeLikes;
+    }
+
+    public void setRecipeLikes(Set<RecipePreparation> recipeLikes) {
+        this.recipeLikes = recipeLikes;
+    }
+
+    public Set<RecipePreparation> getRecipePreparations() {
+        return recipePreparations;
+    }
+
+    public void setRecipePreparations(Set<RecipePreparation> recipePreparations) {
+        this.recipePreparations = recipePreparations;
+    }
+
+    public Set<RecipeComment> getRecipeComments() {
+        return recipeComments;
+    }
+
+    public void setRecipeComments(Set<RecipeComment> recipeComments) {
+        this.recipeComments = recipeComments;
+    }
 }
