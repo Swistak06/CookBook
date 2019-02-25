@@ -83,7 +83,7 @@ public class RecipeController {
         return "searching-result-page";
     }
 
-    @GetMapping("/searchRecipe/page={pageNum}")
+    @PostMapping("/searchRecipe/{pageNum}")
     public String searchForRecipe(@RequestParam("searchedRecipeName") String recipeName, @RequestParam("searchedCategory") String category, @PathVariable("pageNum") int page, Model model){
         boolean isNextPageEmpty = true;
         List<Recipe> recipes;
