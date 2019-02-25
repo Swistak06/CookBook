@@ -75,9 +75,6 @@
     <div class="offset-2 col-8 mt-2">
         <form th:method="post" th:object="${newUser}" th:action="@{/signUpUser}" class="card" id="signUpForm">
             <div class="card-body">
-                <div th:if="${param.err != null}" class="alert alert-danger" role="alert">
-                    Error occurred. Please try again.
-                </div>
                 <label class="mt-2"  for="username">Username</label>
                 <input type="text" class="form-control" id="username" required placeholder="Username" th:field="*{username}">
                 <label class="mt-2"  for="password">Password</label>
@@ -95,7 +92,7 @@
 
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script src="/js/sign-up-validate.js"></script>
+<script src="/js/signUp-validate.js"></script>
 <script src="/webjars/popper.js/1.14.1/popper.js"></script>
 </body>
 </html>

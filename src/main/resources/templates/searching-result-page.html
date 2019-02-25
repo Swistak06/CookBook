@@ -73,7 +73,7 @@
 </nav>
 
 <div class="container">
-    <div class="row mt-3">
+    <div class="row mt-3 mb-1">
         <div class="col-12">
             <h1 class="offset-6">Found: </h1>
             <h2 th:if="${recipesFound.isEmpty()}">No recipes found</h2>
@@ -89,13 +89,16 @@
                 </div>
             </div>
         </div>
-        <a th:if="${pageNumber &gt; 1}" th:href="@{${pageNumber -1}}">
-            <button class="btn btn-light col-1" type="button">Previous </button>
-        </a>
-        <a th:unless="${isNextPageEmpty}" th:href="@{${pageNumber + 1}}">
-            <button class="btn btn-light offset-10 col-1" type="button">Next </button>
-        </a>
     </div>
+    <a th:if="${pageNumber &gt; 1}" th:href="@{${pageNumber -1}}">
+        <button class="btn btn-secondary col-1 px-0 my-2" type="button">Previous </button>
+    </a>
+    <a th:if="${!isNextPageEmpty and pageNumber == 1}" th:href="@{${pageNumber + 1}}">
+        <button class="btn btn-secondary offset-11 col-1 px-0 my-2" type="button">Next</button>
+    </a>
+    <a th:if="${!isNextPageEmpty and pageNumber != 1}" th:href="@{${pageNumber + 1}}">
+        <button class="btn btn-secondary offset-10 col-1 px-0 my-2" type="button">Next</button>
+    </a>
 </div>
 
 

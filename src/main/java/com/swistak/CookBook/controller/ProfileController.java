@@ -26,10 +26,16 @@ public class ProfileController {
     @GetMapping("/profile/myCookBook/{category}/{pageNum}")
     public String showMyCookBookCategoryPage(@PathVariable("category") String category, @PathVariable("pageNum") int pageNum, Model model, Principal principal){
         List<Recipe> recipesFound = new ArrayList<>();
+        List<Recipe> nextPageRecipes = new ArrayList<>();
+        boolean isNextPageEmpty = true;
+        int pageNumber = pageNum;
         int numberOfCardGroups = 1;
         if(category.equals("maindish"))
             category="main dish";
         recipesFound = recipeService.getSavedRecipesByUserFromCategoryInRange(principal.getName(),category,(pageNum-1)*16,16);
+        nextPageRecipes = recipeService.getSavedRecipesByUserFromCategoryInRange(principal.getName(),category,pageNum*16,16);
+        if(!nextPageRecipes.isEmpty())
+            isNextPageEmpty = false;
         numberOfCardGroups = (int)Math.ceil(recipesFound.size()/4.0);
         Recipe[][] dividedRecipes = new Recipe[numberOfCardGroups][4];
         for(int i = 0; i < recipesFound.size(); i++)
@@ -38,6 +44,9 @@ public class ProfileController {
             category = "All Recipes";
         model.addAttribute("chosenCategory","Saved " + category + "s");
         model.addAttribute("recipesFound",dividedRecipes);
+        model.addAttribute("isNextPageEmpty", isNextPageEmpty);
+        model.addAttribute("pageNumber", pageNumber);
+
 
         return "mycookbook-page";
     }
