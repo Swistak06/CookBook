@@ -78,6 +78,9 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "commentingUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecipeComment> recipeComments = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RecipeSave> recipeSaves = new HashSet<>();
+
     @Override
     public boolean isAccountNonExpired() {
         return !isExpired;
@@ -188,5 +191,29 @@ public class User implements UserDetails{
 
     public void setRecipeRates(Set<RecipeRate> recipeRates) {
         this.recipeRates = recipeRates;
+    }
+
+    public Set<RecipePreparation> getRecipeLikes() {
+        return recipeLikes;
+    }
+
+    public void setRecipeLikes(Set<RecipePreparation> recipeLikes) {
+        this.recipeLikes = recipeLikes;
+    }
+
+    public Set<RecipePreparation> getRecipePreparations() {
+        return recipePreparations;
+    }
+
+    public void setRecipePreparations(Set<RecipePreparation> recipePreparations) {
+        this.recipePreparations = recipePreparations;
+    }
+
+    public Set<RecipeComment> getRecipeComments() {
+        return recipeComments;
+    }
+
+    public void setRecipeComments(Set<RecipeComment> recipeComments) {
+        this.recipeComments = recipeComments;
     }
 }

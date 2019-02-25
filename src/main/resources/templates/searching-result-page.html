@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Sign up</title>
+    <title>Recipes</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
@@ -71,31 +71,38 @@
         </div>
     </div>
 </nav>
+
 <div class="container">
-    <div class="offset-2 col-8 mt-2">
-        <form th:method="post" th:object="${newUser}" th:action="@{/signUpUser}" class="card" id="signUpForm">
-            <div class="card-body">
-                <div th:if="${param.err != null}" class="alert alert-danger" role="alert">
-                    Error occurred. Please try again.
+    <div class="row mt-3">
+        <div class="col-12">
+            <h1 class="offset-6">Found: </h1>
+            <h2 th:if="${recipesFound.isEmpty()}">No recipes found</h2>
+            <div th:each="recipe : ${recipesFound}" class="card col-12">
+                <div class="card-body">
+                    <img th:src="${recipe.getImages().get(0).getUrl()}" width="200" height="200" class="d-inline-block">
+                    <div class="d-inline-block ml-3">
+                        <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.name}" class="card-link"></a></h5>
+                        <h5 class="card-subtitle mb-2 text-muted" th:text="'Difficulty: ' + ${recipe.difficulty}"></h5>
+                        <h5 class="card-subtitle mb-2 text-muted" th:text="'Rate: ' + ${recipe.averageRate}"></h5>
+                        <h5 class="card-title"><a th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="'Author: ' + ${recipe.user.username}" class="card-link"></a></h5>
+                    </div>
                 </div>
-                <label class="mt-2"  for="username">Username</label>
-                <input type="text" class="form-control" id="username" required placeholder="Username" th:field="*{username}">
-                <label class="mt-2"  for="password">Password</label>
-                <input type="password" class="form-control" id="password" required placeholder="Password" th:field="*{password}">
-                <label class="mt-2"  for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" required placeholder="Confirm Password">
-                <label for="e-mail" class="mt-2">Email</label>
-                <input type="email" class="form-control" id="e-mail" required placeholder="e-mail" th:field="*{email}">
-                <button type="submit" class="btn btn-primary mt-1" id="signUpButton">Register</button>
             </div>
-        </form>
+        </div>
+        <a th:if="${pageNumber &gt; 1}" th:href="@{${pageNumber -1}}">
+            <button class="btn btn-light col-1" type="button">Previous </button>
+        </a>
+        <a th:unless="${isNextPageEmpty}" th:href="@{${pageNumber + 1}}">
+            <button class="btn btn-light offset-10 col-1" type="button">Next </button>
+        </a>
     </div>
-    <button class="btn" type="button" id="someButton">Aloha!</button>
 </div>
+
+
+
 
 <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script src="/js/sign-up-validate.js"></script>
 <script src="/webjars/popper.js/1.14.1/popper.js"></script>
 </body>
 </html>

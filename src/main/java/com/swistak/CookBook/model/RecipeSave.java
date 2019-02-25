@@ -1,13 +1,14 @@
 package com.swistak.CookBook.model;
 
 import javax.persistence.*;
+
 @Entity
-@Table(name = "recipe_preparations")
-public class RecipePreparation {
+@Table(name="recipe_saves")
+public class RecipeSave {
 
     @Id
     @GeneratedValue
-    @Column(name = "recipe_preparation_id")
+    @Column(name = "recipe_save_id")
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -18,10 +19,10 @@ public class RecipePreparation {
     @JoinColumn(name = "recipe_id")
     Recipe recipe;
 
-    private RecipePreparation() {
+    public RecipeSave() {
     }
 
-    public RecipePreparation(User user, Recipe recipe) {
+    public RecipeSave(User user, Recipe recipe) {
         this.user = user;
         this.recipe = recipe;
     }

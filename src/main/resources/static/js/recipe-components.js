@@ -14,7 +14,6 @@ for(var i = 0; i<5; i++){
         rateButtonsModes.push("/icons/star2.png");
 }
 
-
 function hoverIn(button){
     for(var i = 0; i<rateButtonArray.indexOf(button)+1; i++){
         $(rateButtonArray[i]).attr("src","/icons/star2.png");
@@ -79,6 +78,21 @@ $("#madeItButton").click(function(){
         url: urlString,
         success: function (data) {
             $("#recipePreparationNumberLabel").text('Made it: ' + data)
+        }
+    });
+});
+
+$("#saveRecipeButton").click(function () {
+    var id = $(this).parent().parent().parent().attr('name');
+    var urlString = '/api/saveRecipe/recipe' + id;
+    $.ajax({
+        type: "GET",
+        url: urlString,
+        success: function (data) {
+            if(data)
+                alert("Recipe removed from cook book");
+            else
+                alert("Recipe added to cook book");
         }
     });
 });

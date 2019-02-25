@@ -29,29 +29,51 @@
         <div class="collapse navbar-collapse mr-auto mt-1 mb-1" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto col-3">
                 <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/}">CookBook</a>
-                <a class="btn navbar-brand navbar-button-custom text-white" th:href="@{/addRecipe}">Add Recipe +</a>
+                <div class="dropdown">
+                    <button class="btn navbar-brand navbar-button-custom dropdown-toggle text-white" type="button" id="categoriesDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/recipes/maindish/1">Main Dishes</a>
+                        <a class="dropdown-item" href="/recipes/soup/1">Soups</a>
+                        <a class="dropdown-item" href="/recipes/salad/1">Salads</a>
+                        <a class="dropdown-item" href="/recipes/cake/1">Cakes</a>
+                        <a class="dropdown-item" href="/recipes/dessert/1">Desserts</a>
+                        <a class="dropdown-item" href="/recipes/other/1">Other</a>
+                    </div>
+                </div>
             </div>
             <div class="navbar-nav mr-auto col-7">
-                <form class="input-group" th:action="@{/searchRecipe}" method="POST">
+                <form class="input-group" th:action="@{/searchRecipe/page=1}" method="get">
                     <input style="width: 50%" type="text" class="form-control" placeholder="" aria-label=""
                            aria-describedby="basic-addon1" name="searchedRecipeName">
                     <select class="custom-select" id="inputGroupSelect01" name="searchedCategory">
                         <option selected value="All">All Categories</option>
                         <option value="Main dish">Main dish</option>
-                        <option value="Soups">Soups</option>
-                        <option value="Salads">Salads</option>
-                        <option value="Cakes">Cakes</option>
-                        <option value="Desserts">Desserts</option>
-                        <option value="Others">Others</option>
-
+                        <option value="Soup">Soups</option>
+                        <option value="Salad">Salads</option>
+                        <option value="Cake">Cakes</option>
+                        <option value="Dessert">Desserts</option>
+                        <option value="Other">Others</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-primary text-light" type="submit">Search</button>
                     </div>
                 </form>
             </div>
-            <div class="navbar-nav mr-auto col-2">
-                <a>Login</a>
+            <div class="navbar-nav mr-auto">
+                <a sec:authorize="isAnonymous()" role="button" class="btn btn-primary ml-3 mr-3" th:href="@{signIn}"> Login</a>
+                <div sec:authorize="isAuthenticated()" class="dropdown">
+                    <button class="btn navbar-button-custom dropdown-toggle" type="button" id="accountDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        My Account
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:href="@{/profile/myCookBook/all/1}">My CookBook</a>
+                        <a class="dropdown-item" href="#">Profile settings</a>
+                        <a class="dropdown-item" th:href="@{/addRecipe}">Add recipe</a>
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

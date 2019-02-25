@@ -33,11 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     private static final String[] PUBLIC_MATCHES = {
             "/",
-            "/recipe/*"
+            "/recipe/*",
     };
 
     private static final String[] LOGGED_MATCHES = {
             "/addRecipe",
+            "/profile/**",
+            "/api/**"
     };
 
     private static final String[] ADMIN_MATCHES = {

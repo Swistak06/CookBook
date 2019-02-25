@@ -14,8 +14,14 @@ public interface RecipeService {
     Recipe findByID(long id);
     void addOrRemovePrepFromRecipe(Recipe recipe, User user);
     void addOrChangeRecipeRate(Recipe recipe, User user, int rate);
+    boolean saveOrRemoveRecipeFromCookBook(Recipe recipe, User user);
     RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user);
     List<Recipe> findNewestRecipes();
     List<Recipe> findBestRatedRecipes();
+    List<Recipe> getRecipesFromCategoryInRange(String category, int start, int numberOfResults);
+    List<Recipe> getRecipesByNameFromCategoryInRange(String recipeName, String category, int start, int numberOfResults);
+    List<Recipe> getRecipesByNameInRange(String recipeName, int start, int numberOfResults);
+    List<Recipe> getRecipesInRange(int start, int numberOfResults);
+    List<Recipe> getSavedRecipesByUserFromCategoryInRange(String username, String category, int start, int numberOfResults);
     RecipeComment addCommentToRecipe(RecipeComment recipeComment);
 }

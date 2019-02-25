@@ -5,35 +5,38 @@ import com.swistak.CookBook.dto.IngredientDto;
 import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.dto.StepDto;
 import com.swistak.CookBook.model.*;
-import com.swistak.CookBook.repository.RecipeCommentRepository;
-import com.swistak.CookBook.repository.RecipePreparationRepository;
-import com.swistak.CookBook.repository.RecipeRateRepository;
-import com.swistak.CookBook.repository.RecipeRepository;
+import com.swistak.CookBook.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Service
 public class RecipeServiceImpl implements RecipeService{
 
-    @Autowired
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
+    private RecipePreparationRepository recipePreparationRepository;
+    private RecipeRateRepository recipeRateRepository;
+    private RecipeCommentRepository recipeCommentRepository;
+    private EntityManager entityManager;
+    private UserService userService;
+    private RecipeSaveRepository recipeSaveRepository;
+
+    private final DtoService dtoService;
 
     @Autowired
-    RecipePreparationRepository recipePreparationRepository;
-
-    @Autowired
-    RecipeRateRepository recipeRateRepository;
-
-    @Autowired
-    RecipeCommentRepository recipeCommentRepository;
-
-    private DtoService dtoService;
-
-    public RecipeServiceImpl(DtoService dtoService) {
+    public RecipeServiceImpl(DtoService dtoService, RecipeRepository recipeRepository, RecipePreparationRepository recipePreparationRepository, RecipeRateRepository recipeRateRepository, RecipeCommentRepository recipeCommentRepository, EntityManager entityManager, UserService userService, RecipeSaveRepository recipeSaveRepository) {
         this.dtoService = dtoService;
+        this.recipeRepository = recipeRepository;
+        this.recipePreparationRepository = recipePreparationRepository;
+        this.recipeRateRepository = recipeRateRepository;
+        this.recipeCommentRepository = recipeCommentRepository;
+        this.entityManager = entityManager;
+        this.userService = userService;
+        this.recipeSaveRepository = recipeSaveRepository;
     }
 
     @Override
@@ -103,6 +106,19 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    public boolean saveOrRemoveRecipeFromCookBook(Recipe recipe, User user) {
+        RecipeSave recipeSave = recipeSaveRepository.findRecipeSaveByRecipeAndUser(recipe, user);
+        if(recipeSave == null){
+            recipeSaveRepository.save(new RecipeSave(user, recipe ));
+            return false;
+        }
+        else{
+            recipeSaveRepository.delete(recipeSave);
+            return true;
+        }
+    }
+
+    @Override
     public RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user) {
         return recipeRateRepository.findByRecipeAndUser(recipe,user);
     }
@@ -115,6 +131,77 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public List<Recipe> findBestRatedRecipes() {
         return recipeRepository.findTop4ByAverageRateIsNotNullOrderByAverageRateDesc();
+    }
+
+    @Override
+    public List<Recipe> getRecipesFromCategoryInRange(String category, int start, int numberOfResults) {
+        String sql = "Select r from Recipe r where r.category like :category order by r.averageRate desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("category",category).getResultList());
+
+        return result;
+    }
+
+    @Override
+    public List<Recipe> getRecipesByNameFromCategoryInRange(String recipeName, String category, int start, int numberOfResults) {
+        String sql = "Select r from Recipe r where r.category like :category and r.name like CONCAT('%',:recipeName,'%') order by r.id desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("category",category).setParameter("recipeName",recipeName).getResultList());
+
+        return result;
+    }
+
+    @Override
+    public List<Recipe> getRecipesByNameInRange(String recipeName, int start, int numberOfResults) {
+        String sql = "Select r from Recipe r where r.name like CONCAT('%',:recipeName,'%') order by r.id desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("recipeName",recipeName).getResultList());
+
+        return result;
+    }
+
+    @Override
+    public List<Recipe> getRecipesInRange(int start, int numberOfResults) {
+        String sql = "Select r from Recipe r order by r.id desc";
+        List<Recipe> result = new ArrayList<>();
+
+        result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).getResultList());
+
+        return result;
+    }
+
+    @Override
+    public List<Recipe> getSavedRecipesByUserFromCategoryInRange(String  username, String category, int start, int numberOfResults) {
+        String sql;
+        List<RecipeSave> result = new ArrayList<>();
+        List<Recipe> recipes = new ArrayList<>();
+        List<Recipe> rec = new ArrayList<>();
+        User user = userService.findByUsername(username);
+        sql = "Select rs from RecipeSave rs where rs.user = :user order by rs.id desc";
+        if(category.equals("all")){
+            result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("user",user).getResultList());
+            for (RecipeSave rs: result){
+                recipes.add(rs.getRecipe());
+            }
+        }
+        else{
+            result.addAll(entityManager.createQuery(sql).setParameter("user",user).getResultList());
+            for (RecipeSave rs: result){
+                if(rs.getRecipe().getCategory().toLowerCase().equals(category))
+                    rec.add(rs.getRecipe());
+            }
+            if(!rec.isEmpty() && rec.size() >= (start + 1) * 16)
+                for(int i = start * 16; i <(start + 1) * 16; i++)
+                    recipes.add(rec.get(i));
+            else
+                for(int i = start * 16; i <rec.size(); i++)
+                    recipes.add(rec.get(i));
+        }
+
+        return recipes;
     }
 
     @Override

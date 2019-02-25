@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.math.RoundingMode;
 import java.security.Principal;
 import java.text.DecimalFormat;
+import java.util.List;
 
 @Controller
 public class RecipeController {
@@ -65,5 +66,41 @@ public class RecipeController {
         Recipe recipe = recipeService.findByID(id);
         recipeService.addOrRemovePrepFromRecipe(recipe,user);
         return "redirect:" + referer;
+    }
+
+    @GetMapping("/recipes/{category}/{page}")
+    public String showPageWithRecipesFromCategory(@PathVariable("category") String category, @PathVariable("page") int page, Model model){
+        boolean isNextPageEmpty = true;
+        if(category.equals("maindish"))
+            category = "Main dish";
+        List<Recipe> recipes = recipeService.getRecipesFromCategoryInRange(category,(page-1)*10,10);
+        List<Recipe> nextPage = recipeService.getRecipesFromCategoryInRange(category,page*10,10);
+        if(nextPage.size() > 0 )
+            isNextPageEmpty = false;
+        model.addAttribute("isNextPageEmpty", isNextPageEmpty);
+        model.addAttribute("recipesFound", recipes);
+        model.addAttribute("pageNumber", page);
+        return "searching-result-page";
+    }
+
+    @GetMapping("/searchRecipe/page={pageNum}")
+    public String searchForRecipe(@RequestParam("searchedRecipeName") String recipeName, @RequestParam("searchedCategory") String category, @PathVariable("pageNum") int page, Model model){
+        boolean isNextPageEmpty = true;
+        List<Recipe> recipes;
+        List<Recipe> nextPage;
+        if(category.equals("All")){
+            recipes = recipeService.getRecipesByNameInRange(recipeName,(page-1)*10,10);
+            nextPage = recipeService.getRecipesByNameInRange(recipeName,page*10,10);
+        }
+        else {
+            recipes = recipeService.getRecipesByNameFromCategoryInRange(recipeName,category,(page-1)*10,10);
+            nextPage = recipeService.getRecipesByNameFromCategoryInRange(recipeName,category,page*10,10);
+        }
+        if(nextPage.size() > 0 )
+            isNextPageEmpty = false;
+        model.addAttribute("isNextPageEmpty", isNextPageEmpty);
+        model.addAttribute("recipesFound", recipes);
+        model.addAttribute("pageNumber", page);
+        return "searching-result-page";
     }
 }

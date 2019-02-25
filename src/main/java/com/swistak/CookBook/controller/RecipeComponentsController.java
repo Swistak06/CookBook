@@ -1,6 +1,5 @@
 package com.swistak.CookBook.controller;
 
-import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.model.Recipe;
 import com.swistak.CookBook.model.RecipeComment;
 import com.swistak.CookBook.model.RecipeRate;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.stream.events.Comment;
 import java.math.RoundingMode;
 import java.security.Principal;
 import java.text.DecimalFormat;
@@ -34,7 +32,6 @@ public class RecipeComponentsController {
         return recipe.getPreparationsByUsers();
     }
 
-
     @PostMapping("/api/rateRecipe/recipe{id}")
     @ResponseBody
     public String getRecipeRate(@PathVariable("id") long id, Principal principal,@RequestParam("rateVal") int rateVal){
@@ -45,6 +42,15 @@ public class RecipeComponentsController {
         recipeService.addOrChangeRecipeRate(recipe,user,rateVal);
         return df.format(recipe.getAverageRate());
     }
+
+    @GetMapping("/api/saveRecipe/recipe{id}")
+    @ResponseBody
+    public boolean saveRecipe(@PathVariable("id") long id, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        Recipe recipe = recipeService.findByID(id);
+        return recipeService.saveOrRemoveRecipeFromCookBook(recipe, user);
+    }
+
 
     @GetMapping("/api/getRecipeRateFromUser/recipe{id}")
     @ResponseBody
