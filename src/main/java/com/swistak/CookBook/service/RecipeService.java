@@ -14,6 +14,7 @@ public interface RecipeService {
     Recipe findByID(long id);
     void addOrRemovePrepFromRecipe(Recipe recipe, User user);
     void addOrChangeRecipeRate(Recipe recipe, User user, int rate);
+    boolean saveOrRemoveRecipeFromCookBook(Recipe recipe, User user);
     RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user);
     List<Recipe> findNewestRecipes();
     List<Recipe> findBestRatedRecipes();

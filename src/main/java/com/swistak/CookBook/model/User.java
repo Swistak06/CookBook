@@ -78,6 +78,9 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "commentingUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RecipeComment> recipeComments = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RecipeSave> recipeSaves = new HashSet<>();
+
     @Override
     public boolean isAccountNonExpired() {
         return !isExpired;

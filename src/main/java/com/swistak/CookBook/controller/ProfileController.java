@@ -29,7 +29,7 @@ public class ProfileController {
         int numberOfCardGroups = 1;
         if(category.equals("maindish"))
             category="main dish";
-        recipesFound = recipeService.getSavedRecipesByUserFromCategoryInRange(principal.getName(),category,pageNum,16);
+        recipesFound = recipeService.getSavedRecipesByUserFromCategoryInRange(principal.getName(),category,(pageNum-1)*16,16);
         numberOfCardGroups = (int)Math.ceil(recipesFound.size()/4.0);
         Recipe[][] dividedRecipes = new Recipe[numberOfCardGroups][4];
         for(int i = 0; i < recipesFound.size(); i++)

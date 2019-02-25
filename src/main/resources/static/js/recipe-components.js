@@ -82,6 +82,21 @@ $("#madeItButton").click(function(){
     });
 });
 
+$("#saveRecipeButton").click(function () {
+    var id = $(this).parent().parent().parent().attr('name');
+    var urlString = '/api/saveRecipe/recipe' + id;
+    $.ajax({
+        type: "GET",
+        url: urlString,
+        success: function (data) {
+            if(data)
+                alert("Recipe removed from cook book");
+            else
+                alert("Recipe added to cook book");
+        }
+    });
+});
+
 $("#rate1Btn").hover(function(){hoverIn(rateButtonArray[0])},function(){hoverOut(rateButtonArray[0])});
 $("#rate2Btn").hover(function(){hoverIn(rateButtonArray[1])},function(){hoverOut(rateButtonArray[1])});
 $("#rate3Btn").hover(function(){hoverIn(rateButtonArray[2])},function(){hoverOut(rateButtonArray[2])});

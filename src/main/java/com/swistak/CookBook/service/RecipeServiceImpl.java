@@ -5,10 +5,7 @@ import com.swistak.CookBook.dto.IngredientDto;
 import com.swistak.CookBook.dto.RecipeDto;
 import com.swistak.CookBook.dto.StepDto;
 import com.swistak.CookBook.model.*;
-import com.swistak.CookBook.repository.RecipeCommentRepository;
-import com.swistak.CookBook.repository.RecipePreparationRepository;
-import com.swistak.CookBook.repository.RecipeRateRepository;
-import com.swistak.CookBook.repository.RecipeRepository;
+import com.swistak.CookBook.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +23,12 @@ public class RecipeServiceImpl implements RecipeService{
     private RecipeCommentRepository recipeCommentRepository;
     private EntityManager entityManager;
     private UserService userService;
+    private RecipeSaveRepository recipeSaveRepository;
 
-    private DtoService dtoService;
+    private final DtoService dtoService;
 
     @Autowired
-    public RecipeServiceImpl(DtoService dtoService, RecipeRepository recipeRepository, RecipePreparationRepository recipePreparationRepository, RecipeRateRepository recipeRateRepository, RecipeCommentRepository recipeCommentRepository, EntityManager entityManager, UserService userService) {
+    public RecipeServiceImpl(DtoService dtoService, RecipeRepository recipeRepository, RecipePreparationRepository recipePreparationRepository, RecipeRateRepository recipeRateRepository, RecipeCommentRepository recipeCommentRepository, EntityManager entityManager, UserService userService, RecipeSaveRepository recipeSaveRepository) {
         this.dtoService = dtoService;
         this.recipeRepository = recipeRepository;
         this.recipePreparationRepository = recipePreparationRepository;
@@ -38,6 +36,7 @@ public class RecipeServiceImpl implements RecipeService{
         this.recipeCommentRepository = recipeCommentRepository;
         this.entityManager = entityManager;
         this.userService = userService;
+        this.recipeSaveRepository = recipeSaveRepository;
     }
 
     @Override
@@ -107,6 +106,19 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
+    public boolean saveOrRemoveRecipeFromCookBook(Recipe recipe, User user) {
+        RecipeSave recipeSave = recipeSaveRepository.findRecipeSaveByRecipeAndUser(recipe, user);
+        if(recipeSave == null){
+            recipeSaveRepository.save(new RecipeSave(user, recipe ));
+            return false;
+        }
+        else{
+            recipeSaveRepository.delete(recipeSave);
+            return true;
+        }
+    }
+
+    @Override
     public RecipeRate findRecipeRateByRecipeAndUser(Recipe recipe, User user) {
         return recipeRateRepository.findByRecipeAndUser(recipe,user);
     }
@@ -164,28 +176,28 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public List<Recipe> getSavedRecipesByUserFromCategoryInRange(String  username, String category, int start, int numberOfResults) {
         String sql;
-        List<RecipePreparation> result = new ArrayList<>();
+        List<RecipeSave> result = new ArrayList<>();
         List<Recipe> recipes = new ArrayList<>();
         List<Recipe> rec = new ArrayList<>();
         User user = userService.findByUsername(username);
-        sql = "Select rp from RecipePreparation rp where rp.user = :user order by rp.id desc";
+        sql = "Select rs from RecipeSave rs where rs.user = :user order by rs.id desc";
         if(category.equals("all")){
-            result.addAll(entityManager.createQuery(sql).setFirstResult(start-1).setMaxResults(numberOfResults).setParameter("user",user).getResultList());
-            for (RecipePreparation rp: result){
-                recipes.add(rp.getRecipe());
+            result.addAll(entityManager.createQuery(sql).setFirstResult(start).setMaxResults(numberOfResults).setParameter("user",user).getResultList());
+            for (RecipeSave rs: result){
+                recipes.add(rs.getRecipe());
             }
         }
         else{
             result.addAll(entityManager.createQuery(sql).setParameter("user",user).getResultList());
-            for (RecipePreparation rp: result){
-                if(rp.getRecipe().getCategory().toLowerCase().equals(category))
-                    rec.add(rp.getRecipe());
+            for (RecipeSave rs: result){
+                if(rs.getRecipe().getCategory().toLowerCase().equals(category))
+                    rec.add(rs.getRecipe());
             }
-            if(!rec.isEmpty() && rec.size() >= start * 20)
-                for(int i = (start-1) * 20; i <start * 20;i++)
+            if(!rec.isEmpty() && rec.size() >= (start + 1) * 16)
+                for(int i = start * 16; i <(start + 1) * 16; i++)
                     recipes.add(rec.get(i));
             else
-                for(int i = (start-1) * 20; i <rec.size(); i++)
+                for(int i = start * 16; i <rec.size(); i++)
                     recipes.add(rec.get(i));
         }
 

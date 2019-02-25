@@ -32,7 +32,6 @@ public class RecipeComponentsController {
         return recipe.getPreparationsByUsers();
     }
 
-
     @PostMapping("/api/rateRecipe/recipe{id}")
     @ResponseBody
     public String getRecipeRate(@PathVariable("id") long id, Principal principal,@RequestParam("rateVal") int rateVal){
@@ -43,6 +42,15 @@ public class RecipeComponentsController {
         recipeService.addOrChangeRecipeRate(recipe,user,rateVal);
         return df.format(recipe.getAverageRate());
     }
+
+    @GetMapping("/api/saveRecipe/recipe{id}")
+    @ResponseBody
+    public boolean saveRecipe(@PathVariable("id") long id, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        Recipe recipe = recipeService.findByID(id);
+        return recipeService.saveOrRemoveRecipeFromCookBook(recipe, user);
+    }
+
 
     @GetMapping("/api/getRecipeRateFromUser/recipe{id}")
     @ResponseBody
